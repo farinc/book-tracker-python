@@ -1,6 +1,6 @@
-from Status import Status
-from Dimension import Dimension
-from BookType import BookType
+from src.Status import Status
+from src.Dimension import Dimension
+from src.BookType import BookType
 
 class BookEntry:
     
