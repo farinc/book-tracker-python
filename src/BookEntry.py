@@ -11,6 +11,7 @@ class BookEntry:
         self.wieght: float = None
         self.status: Status = None
         self.section: str = None
+        self.spine: float = None
         self.threadColor: str = None
         self.headbandColor: str = None
         self.booktype: BookType = None
@@ -75,6 +76,16 @@ class BookEntry:
     @section.setter
     def section(self, value: str):
         self._section = value
+
+    # spine props
+
+    @property
+    def spine(self):
+        return self.spine
+
+    @spine.setter
+    def spine(self, value: str):
+        self._spine = value
 
     # threadColor props
 
