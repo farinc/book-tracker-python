@@ -27,13 +27,11 @@ class Cost:
 
             self.loadFromJSON()
 
-    def loadFromJSON(self) -> None:
-        json_object = json.load("./settings.json")
-        if json_object is not None:
-            self.__dict__.update()
+    def saveToJSONFile(self, fp) -> str:
+        return json.dump(self.__dict__, fp)
 
-    def saveToJSON(self) -> str:
-        json.dumps(self.__dict__, "./settings.json")
+    def loadFromJSONFile(self, fp) -> None:
+        self.__dict__.update(json.load(fp))
 
     @property
     def book(self):

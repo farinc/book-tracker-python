@@ -208,7 +208,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-293</y>
+         <y>0</y>
          <width>821</width>
          <height>1030</height>
         </rect>
@@ -970,10 +970,9 @@
      <addaction name="actionNewCurrent"/>
      <addaction name="actionNewNew"/>
     </widget>
-    <addaction name="actionSave_Entry"/>
+    <addaction name="actionSaveClose"/>
     <addaction name="menuNew_Entry"/>
     <addaction name="actionLoad"/>
-    <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -1009,9 +1008,9 @@
     <string>New entry on new batch</string>
    </property>
   </action>
-  <action name="actionSave_Entry">
+  <action name="actionSaveClose">
    <property name="text">
-    <string>Save Entry</string>
+    <string>Save and Close</string>
    </property>
   </action>
  </widget>

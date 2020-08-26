@@ -71,6 +71,7 @@ class MainWindow(QMainWindow):
         self.scrollAreaDescription.setEnabled(False) #Disable the stuff with props
         self.actionClose.setEnabled(False) #Disable the close feature
         self.comboMode.setEnabled(False)
+        self.hasActiveEntry = False
 
     def setUiActive(self):
         """
@@ -79,6 +80,7 @@ class MainWindow(QMainWindow):
         self.scrollAreaDescription.setEnabled(True) #Enable the stuff with props
         self.actionClose.setEnabled(True) #Enable the close feature
         self.comboMode.setEnabled(True)
+        self.hasActiveEntry = True
 
     def onLoadEntry(self):
         dlg = bookBrowse(self)
@@ -86,21 +88,24 @@ class MainWindow(QMainWindow):
 
     def onEntryLoaded(self, book: BookEntry):
         self.setUiActive()
+        self.hasActiveEntry = True
         self.activeBook = book
+
     def onNewEntryOnCurrentBatch(self):
         pass
 
     def onNewEntryOnNewBatch(self):
         pass
 
-    def onCloseEntry(self):
-        if not self.hasActiveEntry:
-            self.clearEditUI()
-        else:
-            pass
+    def onCloseSaveEntry(self):
+        if self.hasActiveEntry:
+            #Save first
+            with open("./Books/{batchID}/{bookID}.json".format(batchID=self.book.batchID, bookID=self.book.bookID)) as fp:
+                self.book.saveToJSONFile(fp)
 
-    def createBatch(self):
-        pass
+            #Clear ui
+            self.clearEditUI()
+            self.setUiInactive()
 
 app = QApplication(sys.argv)
 window = MainWindow()
