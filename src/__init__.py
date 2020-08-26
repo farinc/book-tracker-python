@@ -1,1 +1,1 @@
-__all__ = ["Cost", "BookEntry", "BookType", "Dimension", "Status"]
+__all__ = ["Cost", "BookEntry", "BookType", "Dimension", "Status", "BookBrowse"]
