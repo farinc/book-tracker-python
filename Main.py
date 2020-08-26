@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
     def book(self):
         return self._book
 
-    @activeBook.setter
+    @book.setter
     def book(self, value: BookEntry):
         self._book = value
 
