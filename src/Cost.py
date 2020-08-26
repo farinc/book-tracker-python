@@ -4,7 +4,7 @@ import math as Math
 
 class Cost:
 
-    def __init__(self, book: BookEntry):
+    def __init__(self):
         super().__init__()
 
         # Padding constants
@@ -23,13 +23,46 @@ class Cost:
         self.superPrice = 0.02
         self.ribbonPrice = 0.10
 
-        if(canBookBeEvalutated(book)):
-            self.book = book
+    @property
+    def book(self):
+        return self.book
 
-    @staticmethod
-    def canBookBeEvalutated(book: BookEntry) -> bool:
-        # TODO: Add conditions
-        return True
+    def setBook(self, value: BookEntry) -> bool:
+        """Sets the active book entry 
+
+        Args:
+            value (BookEntry): the book entry
+
+        Returns:
+            bool: True if this value is either None or this 
+            entry can be evaluated.
+        """
+        if value is None:
+            self.book = None
+            return True
+        elif self.canBookBeEvalutated(value):
+            self.book = value
+            return True
+        else:
+            return False
+
+    def canBookBeEvalutated(self) -> bool:
+        """Determines if a given book can be evaluted using this class.
+        If true, then it is safe to allow the given instance to be set.
+
+        Args:
+            book (BookEntry): a book entry object
+
+        Returns:
+            bool: True if the book can be evaluated and False otherwise
+        """
+        isCoverDim = self.book.coverDim is not None
+        isSpine = self.book.spine is not None
+        isSignitures = self.book.signitures is not None
+        isBookType = self.book.booktype is not None
+
+        return isCoverDim and isSpine and isSignitures and isBookType
+
 
     def getBoardCost(self) -> float:
         """Gets the cost for the board (used for the cover)
