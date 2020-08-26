@@ -1,3 +1,4 @@
+import json
 from src.Status import Status
 from src.Dimension import Dimension
 from src.BookType import BookType
@@ -8,7 +9,7 @@ class BookEntry:
 
         self.bookID: int = None
         self.box: str = None
-        self.wieght: float = None
+        self.weight: float = None
         self.status: Status = None
         self.section: str = None
         self.spine: float = None
@@ -27,6 +28,13 @@ class BookEntry:
         self.coverColor: str = None
         self.coverMaterial: str = None
 
+
+    def saveToJSON(self) -> str:
+        return json.dumps(self.__dict__)
+
+    def loadFromJSON(self, json_object) -> None:
+        self.__dict__.update(json.loads(json_object))
+ 
     # BookID props
 
     @property
