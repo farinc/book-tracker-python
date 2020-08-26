@@ -4,9 +4,9 @@ from src.BookType import BookType
 
 class BookEntry:
     
-    def __init__(self, id: int):
-        self.bookID: int = id
+    def __init__(self):
 
+        self.bookID: int = None
         self.box: str = None
         self.wieght: float = None
         self.status: Status = None
