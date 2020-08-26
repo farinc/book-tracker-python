@@ -12,23 +12,31 @@ class MainWindow(QMainWindow):
 
         uic.loadUi("./ui/mainwindow.ui", self)
 
-        self._activeBook: BookEntry = BookEntry()
+        self._book: BookEntry = BookEntry()
+        self._hasActiveEntry = False
         
         self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
         self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
         self.actionLoad.triggered.connect(self.onLoadEntry)
         self.actionClose.triggered.connect(self.onCloseEntry)
 
-        self.clearEditUI()
         self.setUiInactive()
 
     @property
-    def activeBook(self):
-        return self._activeBook
+    def book(self):
+        return self._book
 
     @activeBook.setter
-    def activeBook(self, value: BookEntry):
-        self._activeBook = value
+    def book(self, value: BookEntry):
+        self._book = value
+
+    @property
+    def hasActiveEntry(self):
+        return self._hasActiveEntry
+
+    @hasActiveEntry.setter
+    def hasActiveEntry(self, value: bool):
+        self._hasActiveEntry = value
 
     def clearEditUI(self):
         """
@@ -87,7 +95,13 @@ class MainWindow(QMainWindow):
         pass
 
     def onCloseEntry(self):
-        self.clearEditUI()
+        if not self.hasActiveEntry:
+            self.clearEditUI()
+        else:
+            pass
+
+    def createBatch(self):
+        pass
 
 app = QApplication(sys.argv)
 window = MainWindow()
