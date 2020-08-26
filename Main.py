@@ -14,6 +14,13 @@ class MainWindow(QMainWindow):
         self.calculateCostWidget = uic.loadUi("./ui/calculator.ui")
         self.searchEntriesWidget = uic.loadUi("./ui/search.ui")
 
+        self.actionNew.triggered.connect(self.calculateCostWidget.show)
+        self.actionLoad.triggered.connect(self.searchEntriesWidget.show)
+        self.actionClose.triggered.connect(self.onCloseEntry)
+
+    def onCloseEntry(self):
+        pass
+
 app = QApplication(sys.argv)
 
 window = MainWindow()
