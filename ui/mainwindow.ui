@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,6 +20,9 @@
    <string notr="true">#centralwidget {
 	padding: 10px;
 }</string>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -82,7 +88,7 @@
 }</string>
          </property>
          <property name="text">
-          <string/>
+          <string> &lt;None&gt;</string>
          </property>
         </widget>
        </item>
@@ -130,7 +136,7 @@
 }</string>
          </property>
          <property name="text">
-          <string/>
+          <string> &lt;None&gt;</string>
          </property>
         </widget>
        </item>
@@ -142,20 +148,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_25">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+        <widget class="QLineEdit" name="lineCost">
          <property name="font">
           <font>
            <family>Courier</family>
           </font>
          </property>
-         <property name="text">
-          <string/>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="placeholderText">
+          <string> N/A</string>
          </property>
         </widget>
        </item>
@@ -187,18 +190,6 @@
          </item>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="buttonSave">
-         <property name="styleSheet">
-          <string notr="true">#buttonSave {
-	background-color: rgb(115, 210, 22);
-}</string>
-         </property>
-         <property name="text">
-          <string>Save</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </item>
@@ -217,14 +208,14 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-327</y>
+         <y>-293</y>
          <width>821</width>
          <height>1030</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="5" column="1">
-         <widget class="QLineEdit" name="lineCoverMaterial">
+         <widget class="QLineEdit" name="editCoverMaterial">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -285,7 +276,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="editHeadbandColor">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -359,7 +350,11 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QDoubleSpinBox" name="spinPageDimX"/>
+            <widget class="QDoubleSpinBox" name="spinPageDimX">
+             <property name="suffix">
+              <string> in</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_7">
@@ -370,23 +365,14 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>in x</string>
+              <string>x</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="spinPageDimY"/>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>in</string>
+            <widget class="QDoubleSpinBox" name="spinPageDimY">
+             <property name="suffix">
+              <string> in</string>
              </property>
             </widget>
            </item>
@@ -434,18 +420,8 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_15">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>in</string>
+             <property name="suffix">
+              <string> in</string>
              </property>
             </widget>
            </item>
@@ -510,7 +486,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLineEdit" name="linePageMaterial">
+         <widget class="QLineEdit" name="editPageMaterial">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -577,7 +553,7 @@
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="editSection">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -732,18 +708,8 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_17">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>oz</string>
+             <property name="suffix">
+              <string> oz</string>
              </property>
             </widget>
            </item>
@@ -913,7 +879,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="1" column="0">
-            <widget class="QPlainTextEdit" name="texteditExtra">
+            <widget class="QPlainTextEdit" name="editExtra">
              <property name="font">
               <font>
                <pointsize>12</pointsize>
@@ -947,6 +913,9 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="suffix">
+              <string> in</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -958,23 +927,14 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>in x</string>
+              <string>x</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="spinCoverDimY"/>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_18">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>in</string>
+            <widget class="QDoubleSpinBox" name="spinCoverDimY">
+             <property name="suffix">
+              <string> in</string>
              </property>
             </widget>
            </item>
@@ -1003,7 +963,15 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionNew"/>
+    <widget class="QMenu" name="menuNew_Entry">
+     <property name="title">
+      <string>New Entry</string>
+     </property>
+     <addaction name="actionNewCurrent"/>
+     <addaction name="actionNewNew"/>
+    </widget>
+    <addaction name="actionSave_Entry"/>
+    <addaction name="menuNew_Entry"/>
     <addaction name="actionLoad"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
@@ -1011,11 +979,6 @@
    </widget>
    <addaction name="menuOptions"/>
   </widget>
-  <action name="actionNew">
-   <property name="text">
-    <string>New Entry</string>
-   </property>
-  </action>
   <action name="actionLoad">
    <property name="text">
     <string>Load Entry</string>
@@ -1036,6 +999,21 @@
     <string>Settings</string>
    </property>
   </action>
+  <action name="actionNewCurrent">
+   <property name="text">
+    <string>New entry on current batch</string>
+   </property>
+  </action>
+  <action name="actionNewNew">
+   <property name="text">
+    <string>New entry on new batch</string>
+   </property>
+  </action>
+  <action name="actionSave_Entry">
+   <property name="text">
+    <string>Save Entry</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>spinPageDimX</tabstop>
@@ -1043,13 +1021,12 @@
   <tabstop>spinCoverDimX</tabstop>
   <tabstop>spinCoverDimY</tabstop>
   <tabstop>editCoverColor</tabstop>
-  <tabstop>lineEdit_3</tabstop>
+  <tabstop>editHeadbandColor</tabstop>
   <tabstop>editThreadColor</tabstop>
-  <tabstop>lineCoverMaterial</tabstop>
-  <tabstop>linePageMaterial</tabstop>
-  <tabstop>lineEdit_2</tabstop>
+  <tabstop>editCoverMaterial</tabstop>
+  <tabstop>editPageMaterial</tabstop>
+  <tabstop>editSection</tabstop>
   <tabstop>editBox</tabstop>
-  <tabstop>spinWeight</tabstop>
   <tabstop>spinPageCount</tabstop>
   <tabstop>spinSpineDim</tabstop>
   <tabstop>spinSignitures</tabstop>
@@ -1064,7 +1041,7 @@
   <tabstop>pushButtonGenStoreDiscription</tabstop>
   <tabstop>pushButtonCostOverview</tabstop>
   <tabstop>scrollAreaDescription</tabstop>
-  <tabstop>texteditExtra</tabstop>
+  <tabstop>editExtra</tabstop>
  </tabstops>
  <resources/>
  <connections/>

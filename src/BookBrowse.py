@@ -7,16 +7,21 @@ class bookBrowse(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         uic.loadUi("./ui/bookBrowser.ui", self)
-        self.openButton.clicked.connect(self.openBook)
+        self.buttonOpen.clicked.connect(self.openBook)
+        self.buttonCancel.clicked.connect(self.close)
+        
         self.book_path : str = "./Books"
+
         #discover all batch folders
         batches = []
         for b in os.listdir(self.book_path):
             if os.path.isdir(self.book_path+"/"+b):
                 batches.append(b);
+
         #add batches to list
         self.batchesList.addItems(batches)
         self.batchesList.itemClicked.connect(self.showBooks)
+
     def showBooks(self, item) :
         books = []
         print(self.booksList.count())
@@ -31,4 +36,7 @@ class bookBrowse(QDialog):
             data = json.load(book_json)
             
     def openBook(self):
+        # Test
         self.booksList.addItem(QListWidgetItem("test"))
+
+        self.close()
