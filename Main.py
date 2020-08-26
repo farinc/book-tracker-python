@@ -8,8 +8,9 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
+        uic.loadUi("./ui/mainwindow.ui", self)
+        
         # Setup the widgets
-        self.entryEditWidget = uic.loadUi("./ui/edit.ui")
         self.calculateCostWidget = uic.loadUi("./ui/calculator.ui")
         self.searchEntriesWidget = uic.loadUi("./ui/search.ui")
 
