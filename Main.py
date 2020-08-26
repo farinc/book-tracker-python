@@ -2,7 +2,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
-from src.bookBrowse import bookBrowse
+from src.BookBrowse import bookBrowse
 from src.BookEntry import BookEntry
 
 class MainWindow(QMainWindow):
