@@ -26,7 +26,7 @@ class Cost:
     @property
     def book(self):
         return self.book
-
+    
     def setBook(self, value: BookEntry) -> bool:
         """Sets the active book entry 
 
@@ -38,15 +38,16 @@ class Cost:
             entry can be evaluated.
         """
         if value is None:
-            self.book = None
+            self._book = None
             return True
-        elif self.canBookBeEvalutated(value):
-            self.book = value
+        elif Cost.canBookBeEvalutated(value):
+            self._book = value
             return True
         else:
             return False
 
-    def canBookBeEvalutated(self) -> bool:
+    @staticmethod
+    def canBookBeEvalutated(value: BookEntry) -> bool:
         """Determines if a given book can be evaluted using this class.
         If true, then it is safe to allow the given instance to be set.
 
@@ -56,10 +57,10 @@ class Cost:
         Returns:
             bool: True if the book can be evaluated and False otherwise
         """
-        isCoverDim = self.book.coverDim is not None
-        isSpine = self.book.spine is not None
-        isSignitures = self.book.signitures is not None
-        isBookType = self.book.booktype is not None
+        isCoverDim = value.coverDim is not None
+        isSpine = value.spine is not None
+        isSignitures = value.signitures is not None
+        isBookType = value.booktype is not None
 
         return isCoverDim and isSpine and isSignitures and isBookType
 
