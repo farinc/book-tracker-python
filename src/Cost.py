@@ -23,7 +23,7 @@ class Cost:
         self.superPrice = 0.02
         self.ribbonPrice = 0.10
 
-        if(canBookBeEvalutated(book)):
+        if(self.canBookBeEvalutated(book)):
             self.book = book
 
     @staticmethod

@@ -2,6 +2,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
+from src.bookBrowse import bookBrowse
 
 class MainWindow(QMainWindow):
 
@@ -15,8 +16,8 @@ class MainWindow(QMainWindow):
         self.searchEntriesWidget = uic.loadUi("./ui/search.ui")
 
 app = QApplication(sys.argv)
-
 window = MainWindow()
 window.show()
-
+dlg = bookBrowse(window)
+dlg.exec()
 app.exec_()
