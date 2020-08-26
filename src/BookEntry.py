@@ -2,12 +2,14 @@ import json
 from src.Status import Status
 from src.Dimension import Dimension
 from src.BookType import BookType
-
+from src.BookType import bookEnumEncoder
+from src.BookType import bookEnumDecoder
 class BookEntry:
     
     def __init__(self):
 
         self._bookID: int = None
+        self._batchID: int = None
         self._box: str = None
         self._weight: float = None
         self._status: Status = None
@@ -15,7 +17,7 @@ class BookEntry:
         self._spine: float = None
         self._threadColor: str = None
         self._headbandColor: str = None
-        self._booktype: BookType = None
+        self._booktype: BookType = BookType.UNDEFINED
         self._extra: str = None
 
         self._pageDim: Dimension = None
@@ -29,12 +31,13 @@ class BookEntry:
         self._coverMaterial: str = None
 
 
-    def saveToJSON(self) -> str:
-        return json.dumps(self.__dict__)
+    def saveToJSONFile(self, fp) -> str:
+        return json.dump(self.__dict__, fp, cls=bookEnumEncoder)
 
-    def loadFromJSON(self, json_object) -> None:
-        self.__dict__.update(json.loads(json_object))
+    def loadFromJSONFile(self, fp) -> None:
+        self.__dict__.update(json.load(fp, object_hook=bookEnumDecoder))
  
+    
     # BookID props
 
     @property
@@ -45,6 +48,14 @@ class BookEntry:
     def bookID(self, value: int):
         self._bookID = value
 
+    # batchID props
+    @property
+    def batchID(self):
+        return self._bookID
+
+    @batchID.setter
+    def batchID(self, value: int):
+        self._batchID = value
     # box props
 
     @property

@@ -73,13 +73,12 @@ class MainWindow(QMainWindow):
         self.comboMode.setEnabled(True)
 
     def onLoadEntry(self):
-        dlg = bookBrowse(window)
+        dlg = bookBrowse(self)
         dlg.exec()
 
-    def onEntryLoaded(self, json_object_str: str):
+    def onEntryLoaded(self, book: BookEntry):
         self.setUiActive()
-        self.activeBook.loadFromJSON(json_object_str)
-
+        self.activeBook = book
     def onNewEntryOnCurrentBatch(self):
         pass
 
