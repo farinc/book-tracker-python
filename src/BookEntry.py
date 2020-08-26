@@ -7,26 +7,26 @@ class BookEntry:
     
     def __init__(self):
 
-        self.bookID: int = None
-        self.box: str = None
-        self.weight: float = None
-        self.status: Status = None
-        self.section: str = None
-        self.spine: float = None
-        self.threadColor: str = None
-        self.headbandColor: str = None
-        self.booktype: BookType = None
-        self.extra: str = None
+        self._bookID: int = None
+        self._box: str = None
+        self._weight: float = None
+        self._status: Status = None
+        self._section: str = None
+        self._spine: float = None
+        self._threadColor: str = None
+        self._headbandColor: str = None
+        self._booktype: BookType = None
+        self._extra: str = None
 
-        self.pageDim: Dimension = None
-        self.pageMaterial: str = None
-        self.pages: int = None
-        self.signitures: int = None
-        self.pagesPerSigniture: int = None
+        self._pageDim: Dimension = None
+        self._pageMaterial: str = None
+        self._pages: int = None
+        self._signitures: int = None
+        self._pagesPerSigniture: int = None
 
-        self.coverDim: Dimension = None
-        self.coverColor: str = None
-        self.coverMaterial: str = None
+        self._coverDim: Dimension = None
+        self._coverColor: str = None
+        self._coverMaterial: str = None
 
 
     def saveToJSON(self) -> str:
@@ -39,7 +39,7 @@ class BookEntry:
 
     @property
     def bookID(self):
-        return self.bookID
+        return self._bookID
 
     @bookID.setter
     def bookID(self, value: int):
@@ -49,7 +49,7 @@ class BookEntry:
 
     @property
     def box(self):
-        return self.box
+        return self._box
 
     @box.setter
     def box(self, value: str):
@@ -59,7 +59,7 @@ class BookEntry:
 
     @property
     def weight(self):
-        return self.weight
+        return self._weight
 
     @weight.setter
     def weight(self, value: float):
@@ -69,7 +69,7 @@ class BookEntry:
 
     @property
     def status(self):
-        return self.status
+        return self._status
 
     @status.setter
     def status(self, value: Status):
@@ -79,7 +79,7 @@ class BookEntry:
 
     @property
     def section(self):
-        return self.section
+        return self._section
 
     @section.setter
     def section(self, value: str):
@@ -89,7 +89,7 @@ class BookEntry:
 
     @property
     def spine(self):
-        return self.spine
+        return self._spine
 
     @spine.setter
     def spine(self, value: str):
@@ -99,7 +99,7 @@ class BookEntry:
 
     @property
     def threadColor(self):
-        return self.threadColor
+        return self._threadColor
 
     @threadColor.setter
     def threadColor(self, value: str):
@@ -109,7 +109,7 @@ class BookEntry:
 
     @property
     def headbandColor(self):
-        return self.headbandColor
+        return self._headbandColor
 
     @headbandColor.setter
     def headbandColor(self, value: str):
@@ -119,7 +119,7 @@ class BookEntry:
 
     @property
     def booktype(self):
-        return self.booktype
+        return self._booktype
 
     @booktype.setter
     def booktype(self, value: BookType):
@@ -129,7 +129,7 @@ class BookEntry:
 
     @property
     def extra(self):
-        return self.extra
+        return self._extra
 
     @extra.setter
     def extra(self, value: str):
@@ -139,7 +139,7 @@ class BookEntry:
 
     @property
     def pageDim(self):
-        return self.pageDim
+        return self._pageDim
 
     @pageDim.setter
     def pageDim(self, value: Dimension):
@@ -149,7 +149,7 @@ class BookEntry:
 
     @property
     def pageMaterial(self):
-        return self.pageMaterial
+        return self._pageMaterial
 
     @pageMaterial.setter
     def pageMaterial(self, value: str):
@@ -159,7 +159,7 @@ class BookEntry:
 
     @property
     def pages(self):
-        return self.pages
+        return self._pages
 
     @pages.setter
     def pages(self, value: int):
@@ -169,7 +169,7 @@ class BookEntry:
 
     @property
     def signitures(self):
-        return self.signitures
+        return self._signitures
 
     @signitures.setter
     def signitures(self, value: int):
@@ -179,7 +179,7 @@ class BookEntry:
 
     @property
     def pagesPerSigniture(self):
-        return self.pagesPerSigniture
+        return self._pagesPerSigniture
 
     @pagesPerSigniture.setter
     def pagesPerSigniture(self, value: int):
@@ -189,7 +189,7 @@ class BookEntry:
 
     @property
     def coverDim(self):
-        return self.coverDim
+        return self._coverDim
 
     @coverDim.setter
     def coverDim(self, value: Dimension):
@@ -199,7 +199,7 @@ class BookEntry:
 
     @property
     def coverColor(self):
-        return self.coverColor
+        return self._coverColor
 
     @coverColor.setter
     def coverColor(self, value: str):
@@ -209,7 +209,7 @@ class BookEntry:
 
     @property
     def coverMaterial(self):
-        return self.coverMaterial
+        return self._coverMaterial
 
     @coverMaterial.setter
     def coverMaterial(self, value: str):
