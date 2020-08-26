@@ -1,27 +1,39 @@
 from src.BookEntry import BookEntry
 from src.BookType import BookType
 import math as Math
+import json
 
 class Cost:
 
     def __init__(self):
         super().__init__()
 
-        # Padding constants
-        self.paddingWidthBoard = 2.0
-        self.paddingHeightBoard = 2.0
-        self.paddingSpineLong = 3.0
-        self.paddingSpineQuarter = 5.0
-        self.paddingSpineForSuper = 2.0
+        def __init__(self):
+            # Padding constants
+            self.paddingWidthBoard = 2.0
+            self.paddingHeightBoard = 2.0
+            self.paddingSpineLong = 3.0
+            self.paddingSpineQuarter = 5.0
+            self.paddingSpineForSuper = 2.0
 
-        # Pricing constants
-        self.sqInchBoardPrice = 0.02
-        self.sheetPrice = 0.05
-        self.sqInchClothPrice = 0.02
-        self.threadLengthPrice = 0.002
-        self.headbandPrice = 0.1
-        self.superPrice = 0.02
-        self.ribbonPrice = 0.10
+            # Pricing constants
+            self.sqInchBoardPrice = 0.02
+            self.sheetPrice = 0.05
+            self.sqInchClothPrice = 0.02
+            self.threadLengthPrice = 0.002
+            self.headbandPrice = 0.1
+            self.superPrice = 0.02
+            self.ribbonPrice = 0.10
+
+            self.loadFromJSON()
+
+    def loadFromJSON(self) -> None:
+        json_object = json.load("./settings.json")
+        if json_object is not None:
+            self.__dict__.update()
+
+    def saveToJSON(self) -> str:
+        json.dumps(self.__dict__, "./settings.json")
 
     @property
     def book(self):
