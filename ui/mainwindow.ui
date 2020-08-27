@@ -217,9 +217,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-12</y>
          <width>821</width>
-         <height>1013</height>
+         <height>1017</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
@@ -232,22 +232,79 @@
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_8">
+           <item row="10" column="0">
+            <widget class="QFrame" name="frame_3">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
-             <property name="text">
-              <string>Page Dimensions</string>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
              </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QLabel" name="label_14">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Pages Per Signiture</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinPagesPerSig"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="editBox"/>
+           </item>
+           <item row="9" column="1">
+            <widget class="QFrame" name="frame_8">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QLabel" name="label_20">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Signitures</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinSignitures"/>
+              </item>
+             </layout>
             </widget>
            </item>
            <item row="0" column="1">
@@ -295,8 +352,8 @@
              </layout>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_5">
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_19">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -308,14 +365,79 @@
                <pointsize>12</pointsize>
               </font>
              </property>
-             <property name="styleSheet">
-              <string notr="true">#label_5 {
-	
-}</string>
+             <property name="text">
+              <string>Section</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="editPageMaterial">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="editSection">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
              </property>
              <property name="text">
-              <string>Cover Dimensions</string>
+              <string>Page Dimensions</string>
              </property>
+            </widget>
+           </item>
+           <item row="12" column="0" colspan="2">
+            <widget class="QFrame" name="frame_10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QPushButton" name="pushButtonGenStoreDiscription">
+                <property name="text">
+                 <string>Generate Store Description</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonCostOverview">
+                <property name="text">
+                 <string>Cost Breakdown</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item row="1" column="1">
@@ -369,8 +491,8 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_21">
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_9">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -383,12 +505,12 @@
               </font>
              </property>
              <property name="text">
-              <string>Headband Color</string>
+              <string>Paper Material</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="editHeadbandColor">
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="editCoverMaterial">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -415,13 +537,21 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="editThreadColor">
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_21">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Headband Color</string>
              </property>
             </widget>
            </item>
@@ -443,168 +573,14 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QLineEdit" name="editCoverMaterial">
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="editThreadColor">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_9">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Paper Material</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLineEdit" name="editPageMaterial">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Section</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="editSection">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_23">
-             <property name="text">
-              <string>Box Letter</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="editBox"/>
-           </item>
-           <item row="8" column="0">
-            <widget class="QFrame" name="frame_5">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QLabel" name="label_16">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Weight</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="spinWeight">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="suffix">
-                 <string> oz</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QFrame" name="frame_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Page Count</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="spinPageCount"/>
-              </item>
-             </layout>
             </widget>
            </item>
            <item row="9" column="0">
@@ -656,41 +632,8 @@
              </layout>
             </widget>
            </item>
-           <item row="9" column="1">
-            <widget class="QFrame" name="frame_8">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
-               <widget class="QLabel" name="label_20">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Signitures</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="spinSignitures"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QFrame" name="frame_3">
+           <item row="8" column="0">
+            <widget class="QFrame" name="frame_5">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -703,9 +646,9 @@
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
-               <widget class="QLabel" name="label_14">
+               <widget class="QLabel" name="label_16">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -718,12 +661,22 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Pages Per Signiture</string>
+                 <string>Weight</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinPagesPerSig"/>
+               <widget class="QDoubleSpinBox" name="spinWeight">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="suffix">
+                 <string> oz</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -792,42 +745,50 @@
              </layout>
             </widget>
            </item>
-           <item row="11" column="0" colspan="2">
-            <widget class="QFrame" name="frame_10">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="editHeadbandColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Box Letter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_5">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
              </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+             <property name="styleSheet">
+              <string notr="true">#label_5 {
+	
+}</string>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QPushButton" name="pushButtonGenStoreDiscription">
-                <property name="text">
-                 <string>Generate Store Description</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButtonCostOverview">
-                <property name="text">
-                 <string>Cost Overview</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <property name="text">
+              <string>Cover Dimensions</string>
+             </property>
             </widget>
            </item>
-           <item row="12" column="0" colspan="2">
-            <widget class="QFrame" name="frame_9">
+           <item row="8" column="1">
+            <widget class="QFrame" name="frame_7">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="MinimumExpanding">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -838,79 +799,32 @@
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="3">
-               <widget class="QRadioButton" name="radioButtonPublished">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_11">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>Published</string>
+                 <string>Page Count</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QRadioButton" name="radioButtonNoPhoto">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>No Photo</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QRadioButton" name="radioButtonDrafted">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Drafted</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QRadioButton" name="radioButtonSold">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Sold</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QRadioButton" name="radioButtonDraftedPhoto">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Drafted w photo</string>
-                </property>
-               </widget>
+              <item>
+               <widget class="QSpinBox" name="spinPageCount"/>
               </item>
              </layout>
             </widget>
            </item>
-           <item row="13" column="0" colspan="2">
+           <item row="14" column="0" colspan="2">
             <widget class="QGroupBox" name="groupBox_9">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Maximum">
@@ -928,6 +842,92 @@
                  <font>
                   <pointsize>12</pointsize>
                  </font>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QFrame" name="frame_11">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Status</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboStatus">
+                <item>
+                 <property name="text">
+                  <string>No photo</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Drafted</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Drafted (w photo)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Published</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Sold</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QFrame" name="frame_9">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Extra Cost</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="spinExtra">
+                <property name="prefix">
+                 <string>$</string>
+                </property>
+                <property name="suffix">
+                 <string/>
+                </property>
+                <property name="singleStep">
+                 <double>0.250000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1023,11 +1023,6 @@
   <tabstop>spinSignitures</tabstop>
   <tabstop>spinPagesPerSig</tabstop>
   <tabstop>comboBookType</tabstop>
-  <tabstop>radioButtonNoPhoto</tabstop>
-  <tabstop>radioButtonDrafted</tabstop>
-  <tabstop>radioButtonDraftedPhoto</tabstop>
-  <tabstop>radioButtonPublished</tabstop>
-  <tabstop>radioButtonSold</tabstop>
   <tabstop>comboMode</tabstop>
   <tabstop>pushButtonGenStoreDiscription</tabstop>
   <tabstop>pushButtonCostOverview</tabstop>

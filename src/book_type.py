@@ -24,18 +24,3 @@ class BookType(Enum):
         elif self is BookType.TRADITIONAL:
             return "Traditional"
         return None
-    
-    @classmethod
-    def getType(cls, index: int):
-        if index == 0:
-            return cls.TRADITIONAL
-        elif index == 1:
-            return cls.COPTIC
-        elif index == 2:
-            return cls.COPTIC2NEEDLE
-        elif index == 3:
-            return cls.STAB
-        elif index == 4:
-            return cls.QUARTER
-        elif index == 5:
-            return cls.LONG

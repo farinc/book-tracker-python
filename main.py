@@ -69,6 +69,9 @@ class MainWindow(QMainWindow):
         self.editPageMaterial.setText("")
         self.editExtra.setPlainText("")
 
+        self.comboBookType.setCurrentIndex(0)
+        self.comboStatus.setCurrentIndex(0)
+
     def populateUi(self):
         """
         Does the opposite of the clearUi function. With a load entry, it fills in all 
@@ -98,21 +101,8 @@ class MainWindow(QMainWindow):
         self.editPageMaterial.setText(self.activeBook.pageMaterial)
         self.editExtra.setPlainText(self.activeBook.extra)
         
-        #Sets book type
         self.comboBookType.setCurrentIndex(self.activeBook.booktype.value)
-        
-        #Sets the radio button
-        status = self.activeBook.status
-        if status is Status.NOPHOTO:
-            self.radioButtonNoPhoto.setChecked(True)
-        elif status is Status.DRAFT:
-            self.radioButtonDrafted.setChecked(True)
-        elif status is Status.DRAFTPHOTO:
-            self.radioButtonDraftedPhoto.setChecked(True)
-        elif status is Status.PUBLISHED:
-            self.radioButtonPublished.setChecked(True)
-        elif status is Status.SOLD:
-            self.radioButtonSold.setChecked(True)
+        self.comboStatus.setCurrentIndex(self.activeBook.status.value)
     
     def saveToBook(self):
         """
@@ -141,19 +131,8 @@ class MainWindow(QMainWindow):
         self.activeBook.extra = self.editExtra.toPlainText()
 
         #Sets the book type
-        self.activeBook.booktype = BookType.getType(self.comboBookType.currentIndex())
-        
-        #Sets the radio button
-        if self.radioButtonNoPhoto.isChecked():
-            self.activeBook.status = Status.NOPHOTO
-        elif self.radioButtonDrafted.isChecked():
-            self.activeBook.status = Status.DRAFT
-        elif self.radioButtonDraftedPhoto.isChecked():
-            self.activeBook.status = Status.DRAFTPHOTO
-        elif self.radioButtonPublished.isChecked():
-            self.activeBook.status = Status.PUBLISHED
-        elif self.radioButtonSold.isChecked():
-            self.activeBook.status = Status.SOLD
+        self.activeBook.booktype = BookType(self.comboBookType.currentIndex())
+        self.activeBook.status = Status(self.comboStatus.currentIndex())
 
     def toggleUi(self, index):
         if index == 0:
