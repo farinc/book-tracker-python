@@ -2,10 +2,10 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
-from src.BookBrowse import bookBrowse
-from src.BookEntry import BookEntry
-from src.BookType import BookType
-from src.Status import Status
+from src.book_browse import bookBrowse
+from src.book_entry import BookEntry
+from src.book_type import BookType
+from src.status import Status
 
 class MainWindow(QMainWindow):
 

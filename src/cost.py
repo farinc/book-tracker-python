@@ -1,8 +1,9 @@
-from src.BookEntry import BookEntry
-from src.BookType import BookType
+from src.book_entry import BookEntry
+from src.book_type import BookType
 import math as Math
 import json
 import os
+
 class Cost:
 
     def __init__(self, book: BookEntry):

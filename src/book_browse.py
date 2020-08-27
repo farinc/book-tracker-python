@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QDialog, QListWidgetItem
 from PyQt5 import uic
 import os
 import json
-from src.BookEntry import BookEntry
-from src.BookType import BookType
+from src.book_entry import BookEntry
+from src.book_type import BookType
 from src.fs_utils import FsUtils
 
 class bookBrowse(QDialog):

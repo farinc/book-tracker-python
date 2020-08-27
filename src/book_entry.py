@@ -1,7 +1,7 @@
 import json
-from src.Status import Status
-from src.Dimension import Dimension
-from src.BookType import BookType
+from src.status import Status
+from src.dimension import Dimension
+from src.book_type import BookType
 
 class bookEncoder(json.JSONEncoder):
     def default(self, obj):
