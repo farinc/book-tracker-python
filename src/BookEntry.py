@@ -15,7 +15,7 @@ class bookEnumEncoder(json.JSONEncoder):
 
 def bookEnumDecoder(d):
     if "__book_enum__" in d:
-        name = d["__book_enum__"]
+        name = d["__type_enum__"]
         return getattr(BookType, name)
     if "__status_enum__" in d:
         name = d["__status_enum__"]
