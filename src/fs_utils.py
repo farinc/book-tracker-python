@@ -33,4 +33,4 @@ class FsUtils:
         book_entry = BookEntry()
         with open("./Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id), 'r') as fp:
             book_entry.loadFromJSONFile(fp)
-        return book_entry
+            return book_entry

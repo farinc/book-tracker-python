@@ -24,9 +24,6 @@ class Cost:
             self.headbandPrice = 0.1
             self.superPrice = 0.02
             self.ribbonPrice = 0.10
-            if(os.path.)
-            self.saveToJSON()
-            self.loadFromJSON()
 
     def saveToJSONFile(self, fp) -> str:
         return json.dump(self.__dict__, fp)

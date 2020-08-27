@@ -12,7 +12,7 @@ class MainWindow(QMainWindow):
 
         uic.loadUi("./ui/mainwindow.ui", self)
 
-        self._book: BookEntry = BookEntry()
+        self._book: BookEntry = None
         self._hasActiveEntry = False
         
         self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
@@ -23,11 +23,11 @@ class MainWindow(QMainWindow):
         self.setUiInactive()
 
     @property
-    def book(self):
+    def activeBook(self):
         return self._book
 
-    @book.setter
-    def book(self, value: BookEntry):
+    @activeBook.setter
+    def activeBook(self, value: BookEntry):
         self._book = value
 
     @property
@@ -65,26 +65,28 @@ class MainWindow(QMainWindow):
         self.editExtra.setPlainText("")
 
     def populateUi(self):
-        self.labelBookID.setText(" <None> ")
-        self.labelBatchID.setText(" <None>")
+        if self.activeBook is None:
+            return
+        self.labelBookID.setText(str(self.activeBook.bookID))
+        self.labelBatchID.setText(str(self.activeBook.batchID))
         self.lineCost.setText("")
 
-        self.spinPageDimX.setValue(self.book.pageDim.width)
-        self.spinPageDimY.setValue(self.book.pageDim.height)
-        self.spinCoverDimX.setValue(self.book.coverDim.width)
-        self.spinCoverDimY.setValue(self.book.coverDim.height)
-        self.spinSpineDim.setValue(self.book.spine)
-        self.spinWeight.setValue(self.book.weight)
-        self.spinPageCount.setValue(self.book.pages)
-        self.spinSignitures.setValue(self.book.signitures)
-        self.spinPagesPerSig.setValue(self.book.pagesPerSigniture)
+        self.spinPageDimX.setValue(self.activeBook.pageDim.width)
+        self.spinPageDimY.setValue(self.activeBook.pageDim.height)
+        self.spinCoverDimX.setValue(self.activeBook.coverDim.width)
+        self.spinCoverDimY.setValue(self.activeBook.coverDim.height)
+        self.spinSpineDim.setValue(self.activeBook.spine)
+        self.spinWeight.setValue(self.activeBook.weight)
+        self.spinPageCount.setValue(self.activeBook.pages)
+        self.spinSignitures.setValue(self.activeBook.signitures)
+        self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
-        self.editCoverColor.setText(self.book.coverColor)
-        self.editHeadbandColor.setText(self.book.headbandColor)
-        self.editThreadColor.setText(self.book.threadColor)
-        self.editCoverMaterial.setText(self.book.coverMaterial)
-        self.editPageMaterial.setText(self.book.pageMaterial)
-        self.editExtra.setPlainText(self.book.extra)
+        self.editCoverColor.setText(self.activeBook.coverColor)
+        self.editHeadbandColor.setText(self.activeBook.headbandColor)
+        self.editThreadColor.setText(self.activeBook.threadColor)
+        self.editCoverMaterial.setText(self.activeBook.coverMaterial)
+        self.editPageMaterial.setText(self.activeBook.pageMaterial)
+        self.editExtra.setPlainText(self.activeBook.extra)
 
     def setUiInactive(self):
         """
@@ -123,8 +125,9 @@ class MainWindow(QMainWindow):
     def onCloseSaveEntry(self):
         if self.hasActiveEntry:
             #Save first
-            with open("./Books/{batchID}/{bookID}.json".format(batchID=self.book.batchID, bookID=self.book.bookID)) as fp:
-                self.book.saveToJSONFile(fp)
+            if self.activeBook is not None:
+                with open("./Books/{batchID}/{bookID}.json".format(batchID=self.activeBook.batchID, bookID=self.activeBook.bookID)) as fp:
+                    self.activeBook.saveToJSONFile(fp)
 
             #Clear ui
             self.clearEditUI()

@@ -38,5 +38,5 @@ class bookBrowse(QDialog):
         self.book_entry = FsUtils.getBook(self.batch_id, self.book_id)
         #TODO preview here
     def openBook(self):
-        self.main.onEntryLoaded(self.book_entry)
+        self.main.onEntryLoaded(FsUtils.getBook(self.batch_id, self.book_id))
         self.close()
