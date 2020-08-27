@@ -57,7 +57,6 @@ class MainWindow(QMainWindow):
         self.spinSignitures.setValue(0)
         self.spinPagesPerSig.setValue(0)
 
-        self.editCoverColor.setText("")
         self.editHeadbandColor.setText("")
         self.editThreadColor.setText("")
         self.editCoverMaterial.setText("")
