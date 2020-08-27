@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
         self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
         self.actionLoad.triggered.connect(self.onLoadEntry)
-        self.actionClose.triggered.connect(self.onCloseEntry)
+        self.actionClose.triggered.connect(self.onCloseSaveEntry)
 
         self.setUiInactive()
 
