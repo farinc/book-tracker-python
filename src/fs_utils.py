@@ -1,5 +1,6 @@
 import os
-from src.BookEntry import BookEntry
+from src.book_entry import BookEntry
+
 class FsUtils:
     @classmethod
     def getBatches(cls) -> list:
