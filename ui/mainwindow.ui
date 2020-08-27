@@ -149,10 +149,19 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineCost">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Courier</family>
           </font>
+         </property>
+         <property name="text">
+          <string/>
          </property>
          <property name="readOnly">
           <bool>true</bool>
