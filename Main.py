@@ -64,6 +64,28 @@ class MainWindow(QMainWindow):
         self.editPageMaterial.setText("")
         self.editExtra.setPlainText("")
 
+    def populateUi(self):
+        self.labelBookID.setText(" <None> ")
+        self.labelBatchID.setText(" <None>")
+        self.lineCost.setText("")
+
+        self.spinPageDimX.setValue(self.book.pageDim.width)
+        self.spinPageDimY.setValue(self.book.pageDim.height)
+        self.spinCoverDimX.setValue(self.book.coverDim.width)
+        self.spinCoverDimY.setValue(self.book.coverDim.height)
+        self.spinSpineDim.setValue(self.book.spine)
+        self.spinWeight.setValue(self.book.weight)
+        self.spinPageCount.setValue(self.book.pages)
+        self.spinSignitures.setValue(self.book.signitures)
+        self.spinPagesPerSig.setValue(self.book.pagesPerSigniture)
+
+        self.editCoverColor.setText(self.book.coverColor)
+        self.editHeadbandColor.setText(self.book.headbandColor)
+        self.editThreadColor.setText(self.book.threadColor)
+        self.editCoverMaterial.setText(self.book.coverMaterial)
+        self.editPageMaterial.setText(self.book.pageMaterial)
+        self.editExtra.setPlainText(self.book.extra)
+
     def setUiInactive(self):
         """
         Sets the ui in a state where there is no active book entry
@@ -90,6 +112,7 @@ class MainWindow(QMainWindow):
         self.setUiActive()
         self.hasActiveEntry = True
         self.activeBook = book
+        self.populateUi()
 
     def onNewEntryOnCurrentBatch(self):
         pass
