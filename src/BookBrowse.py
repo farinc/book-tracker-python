@@ -26,23 +26,25 @@ class bookBrowse(QDialog):
         
         self.batchesList.itemClicked.connect(self.showBooks)
         self.booksList.itemClicked.connect(self.loadBook)
+
     def showBooks(self, item) :
         self.batch_id : int = item.text()
         while self.booksList.count() > 0:
             self.booksList.takeItem(0)
         books = [n.replace(".json", "") for n in FsUtils.getBooksInBatch(item.text())]
         self.booksList.addItems(books)
+
     def loadBook(self, item):
         """
         load book entry to show its data in the preview and so it can later pass it to main
         """
         self.book_id = item.text()
         self.book_entry = FsUtils.getBook(self.batch_id, self.book_id)
-        #TODO preview here
         self.labelPages.setText(str(self.book_entry.pages))
         self.labelBox.setText(self.book_entry.box)
         self.labelBookType.setText(self.book_entry.booktype.getDisplayText())
         self.labelCoverMaterial.setText(self.book_entry.coverMaterial)
+        
     def openBook(self):
         self.main.onEntryLoaded(FsUtils.getBook(self.batch_id, self.book_id))
         self.close()

@@ -28,6 +28,7 @@ class FsUtils:
             cls.createBatch(book_entry.batchID)
         with open("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'w') as fp:
             book_entry.saveToJSONFile(fp)
+            
     @classmethod
     def getBook(cls, batch_id, book_id) -> BookEntry:
         book_entry = BookEntry()

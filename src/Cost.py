@@ -5,25 +5,27 @@ import json
 import os
 class Cost:
 
-    def __init__(self):
+    def __init__(self, book: BookEntry):
         super().__init__()
 
         def __init__(self):
             # Padding constants
-            self.paddingWidthBoard = 2.0
-            self.paddingHeightBoard = 2.0
-            self.paddingSpineLong = 3.0
-            self.paddingSpineQuarter = 5.0
-            self.paddingSpineForSuper = 2.0
+            self.paddingWidthBoard: float = 2.0
+            self.paddingHeightBoard: float = 2.0
+            self.paddingSpineLong: float = 3.0
+            self.paddingSpineQuarter: float = 5.0
+            self.paddingSpineForSuper: float = 2.0
 
             # Pricing constants
-            self.sqInchBoardPrice = 0.02
-            self.sheetPrice = 0.05
-            self.sqInchClothPrice = 0.02
-            self.threadLengthPrice = 0.002
-            self.headbandPrice = 0.1
-            self.superPrice = 0.02
-            self.ribbonPrice = 0.10
+            self.sqInchBoardPrice: float = 0.02
+            self.sheetPrice: float = 0.05
+            self.sqInchClothPrice: float = 0.02
+            self.threadLengthPrice: float = 0.002
+            self.headbandPrice: float = 0.1
+            self.superPrice: float = 0.02
+            self.ribbonPrice: float = 0.10
+
+            self._book: BookEntry = book
 
     def saveToJSONFile(self, fp) -> str:
         return json.dump(self.__dict__, fp)
@@ -33,48 +35,47 @@ class Cost:
 
     @property
     def book(self):
-        return self.book
-    
-    def setBook(self, value: BookEntry) -> bool:
-        """Sets the active book entry 
+        return self._book
 
-        Args:
-            value (BookEntry): the book entry
+    @book.setter
+    def book(self, value: BookEntry):
+        self._book = value
 
-        Returns:
-            bool: True if this value is either None or this 
-            entry can be evaluated.
-        """
-        if value is None:
-            self._book = None
-            return True
-        elif Cost.canBookBeEvalutated(value):
-            self._book = value
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def canBookBeEvalutated(value: BookEntry) -> bool:
-        """Determines if a given book can be evaluted using this class.
+    def canBookBeEvalutated(self) -> bool:
+        """Determines if the book instance can be evaluted using this class.
         If true, then it is safe to allow the given instance to be set.
-
-        Args:
-            book (BookEntry): a book entry object
 
         Returns:
             bool: True if the book can be evaluated and False otherwise
         """
-        isCoverDim = value.coverDim is not None
-        isSpine = value.spine is not None
-        isSignitures = value.signitures is not None
-        isBookType = value.booktype is not None
+        if self.book is not None:
+            isCoverDim = self.book.coverDim is not None
+            isSpine = self.book.spine is not None
+            isSignitures = self.book.signitures is not None
+            isBookType = self.book.booktype is not None
 
-        return isCoverDim and isSpine and isSignitures and isBookType
+            return isCoverDim and isSpine and isSignitures and isBookType
+        return False
 
+    def getTotalCost(self) -> float:
+        total: float = 0
+
+        total =+ self.getBoardCost()
+        total =+ self.getPageCost()
+
+        book_type = self.book.booktype
+        if book_type is BookType.COPTIC or book_type is BookType.COPTIC2NEEDLE or book_type is BookType.STAB:
+            total =+ self.getCoptic_StabClothCost()
+        if book_type is BookType.QUARTER or book_type is BookType.LONG:
+            total =+ self.getLong_QuaterBoundClothCost()
+        if book_type is BookType.STAB:
+            total =+ self.getRibbonCost() #TODO: is this the case...
+        
 
     def getBoardCost(self) -> float:
         """Gets the cost for the board (used for the cover)
+
+        Books: ALL
 
         Returns:
             float: the price for board for this book
@@ -93,6 +94,8 @@ class Cost:
         seperate from the cost of the paper material (added as 
         extra) and the cost of the signitures
 
+        Books: ALL
+
         Returns:
             float: the cost for pages
         """
@@ -107,6 +110,10 @@ class Cost:
             return pricePages
 
     def getThreadCost(self) -> float:
+        """Calculates the thread cost
+
+        Books: TRAD, QUARTER, COPTIC, COPTIC2NEEDLE, and LONG
+        """
         
         # added height is the padding for the thread length
         threadLength = self.book.signitures * self.book.coverDim.height + self.book.coverDim.height
@@ -118,55 +125,54 @@ class Cost:
         return priceThread
 
     def getHeadbandCost(self) -> float:
+        """Calculates the headband cost
+
+        Books: TRAD	and QUARTER
+        """
         return self.book.spine * 2 * self.headbandPrice
 
     def getSuperCost(self) -> float:
+        """Calculates the super (mall) cost
+
+        Books: TRAD and QUARTER
+        """
         paddedSpine = self.book.spine + self.paddingSpineForSuper
         sqInchSuper = paddedSpine * self.book.coverDim.height
         return sqInchSuper * self.superPrice
 
-    def getCoptic_StabClothCost(self) -> float:
-        """ Gets the cost associated with the coptic and stab-stich 
-        styles for bookcloth. This is mostly the same as the book 
-        board calculations except its a different price multiplier.
+    def getClothCost(self) -> float:
+        """Calculates the bookcloth cost for different style books
 
-        Returns:
-            float: the cost of bookcloth
+        Books: COPTIC, COPTIC2NEEDLE, STAB, QUARTER, LONG
+
         """
+        if self.book.booktype is BookType.COPTIC or self.book.booktype is BookType.COPTIC2NEEDLE or self.book.booktype is BookType.STAB:
+            paddedWidth = self.book.coverDim.width + self.paddingWidthBoard
+            paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
 
-        paddedWidth = self.book.coverDim.width + self.paddingWidthBoard
-        paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
+            sqInchCloth = paddedHeight * paddedWidth * 2 # Same thing, two covers, twice the amount in cloth
+            
+            return sqInchCloth * self.sqInchClothPrice
 
-        sqInchCloth = paddedHeight * paddedWidth * 2 # Same thing, two covers, twice the amount in cloth
-        priceCloth = sqInchCloth * self.sqInchClothPrice
+        elif self.book.booktype is BookType.LONG or self.book.booktype is BookType.QUARTER:
+            paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
+            
+            paddedSpine = None
+            if self.book.booktype == BookType.QUARTER:
+                paddedSpine = self.paddingSpineQuarter
+            elif self.book.booktype == BookType.LONG:
+                paddedSpine = self.paddingSpineLong
+
+            paddedWidth = self.book.coverDim.width + self.paddingWidthBoard + paddedSpine
+            sqInchCloth = paddedWidth * paddedHeight
+            return sqInchCloth * self.sqInchClothPrice
         
-        return priceCloth
-
-    def getLong_QuaterBoundClothCost(self) -> float:
-        """Calculates the bookcloth cost for long and quater style books
-
-        Raises:
-            ValueError: raised if book is not a long or quater style
-
-        Returns:
-            float: the cost for the bookcloth
-        """
-
-        paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
-        
-        paddedSpine = None
-        if self.book.booktype == BookType.QUARTER:
-            paddedSpine = self.paddingSpineQuarter
-        elif self.book.booktype == BookType.LONG:
-            paddedSpine = self.paddingSpineLong
-        else:
-            raise ValueError("Called when book is neither quarter or long")
-
-        paddedWidth = self.book.coverDim.width + self.paddingWidthBoard + paddedSpine
-        sqInchCloth = paddedWidth * paddedHeight
-        return sqInchCloth * self.sqInchClothPrice
-
     def getRibbonCost(self) -> float:
+        """Calculates the ribbon cost
+
+        Books: STAB
+
+        """
         return self.book.coverDim.height * self.ribbonPrice
 
 

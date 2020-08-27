@@ -966,6 +966,7 @@
     <addaction name="actionSaveClose"/>
     <addaction name="menuNew_Entry"/>
     <addaction name="actionLoad"/>
+    <addaction name="actionMove_Entry"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -1004,6 +1005,11 @@
   <action name="actionSaveClose">
    <property name="text">
     <string>Save and Close</string>
+   </property>
+  </action>
+  <action name="actionMove_Entry">
+   <property name="text">
+    <string>Move Entry</string>
    </property>
   </action>
  </widget>
