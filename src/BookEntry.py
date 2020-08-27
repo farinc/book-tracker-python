@@ -7,8 +7,10 @@ class bookEnumEncoder(json.JSONEncoder):
     def default(self, obj):
         if type(obj) is BookType:
             return {"__type_enum__": obj.name}
-        if type(obj) is Status
+        if type(obj) is Status:
             return {"__status_enum__": obj.name}
+        if type(obj) is Dimension:
+            return {"__dimension__" : obj.__dict__} 
         return json.JSONEncoder.default(self, obj)
 
 def bookEnumDecoder(d):
@@ -18,6 +20,11 @@ def bookEnumDecoder(d):
     if "__status_enum__" in d:
         name = d["__status_enum__"]
         return getattr(Status, name)
+    if "__dimension__" in d:
+        new_dict = d["__dimension__"]
+        dimension = Dimension()
+        dimension.__dict__.update(new_dict)
+        return dimension
     return d
 
 
@@ -25,27 +32,27 @@ class BookEntry:
     
     def __init__(self):
 
-        self._bookID: int = None
-        self._batchID: int = None
-        self._box: str = None
-        self._weight: float = None
-        self._status: Status = None
-        self._section: str = None
-        self._spine: float = None
-        self._threadColor: str = None
-        self._headbandColor: str = None
+        self._bookID: int = 0
+        self._batchID: int = 0
+        self._box: str = str()
+        self._weight: float = 0.0
+        self._status: Status = Status.UNDEFINED
+        self._section: str = str()
+        self._spine: float = 0.0
+        self._threadColor: str = str()
+        self._headbandColor: str = str()
         self._booktype: BookType = BookType.UNDEFINED
-        self._extra: str = None
+        self._extra: str = str()
 
         self._pageDim: Dimension = Dimension()
-        self._pageMaterial: str = None
-        self._pages: int = None
-        self._signitures: int = None
-        self._pagesPerSigniture: int = None
+        self._pageMaterial: str = str()
+        self._pages: int = 0
+        self._signitures: int = 0
+        self._pagesPerSigniture: int = 0
 
         self._coverDim: Dimension = Dimension()
-        self._coverColor: str = None
-        self._coverMaterial: str = None
+        self._coverColor: str = str()
+        self._coverMaterial: str = str()
 
 
     def saveToJSONFile(self, fp) -> str:

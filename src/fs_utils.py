@@ -25,12 +25,12 @@ class FsUtils:
     @classmethod
     def createBook(cls, book_entry : BookEntry):
         if(not os.path.exists("./Books/{id}/".format(id=book_entry.batchID))):
-            createBatch(batchID)
+            cls.createBatch(book_entry.batchID)
         with open("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'w') as fp:
             book_entry.saveToJSONFile(fp)
     @classmethod
     def getBook(cls, batch_id, book_id) -> BookEntry:
         book_entry = BookEntry()
-        with open("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'r') as fp:
+        with open("./Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id), 'r') as fp:
             book_entry.loadFromJSONFile(fp)
         return book_entry
