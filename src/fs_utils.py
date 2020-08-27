@@ -1,7 +1,6 @@
 import os
-
+from src.BookEntry import BookEntry
 class FsUtils:
-
     @classmethod
     def getBatches(cls) -> list:
         batches = []
@@ -11,16 +10,27 @@ class FsUtils:
         return batches
 
     @classmethod
-    def getEntriesFromBatch(cls, batchID: int) -> list:
-        p = "./Books/batch_{batchID}".format(batchID=batchID)
-        entries = []
+    def getBooksInBatch(cls, batchID: int) -> list:
+        p = "./Books/{batch_id}/".format(batch_id=batchID)
+        books = []
         for e in os.listdir(p):
-            if os.path.isfile(p.join(e)):
-                entries.append(e)
-        return entries
+            if os.path.isfile(p+"/"+e):
+                books.append(e)
+        return books
 
     @classmethod
     def createBatch(cls, batchID):
-        os.mkdir("./Books/batch_{id}/".format(id=batchID))
+        os.mkdir("./Books/{batch_id}/".format(batch_id=batchID))
 
-
+    @classmethod
+    def createBook(cls, book_entry : BookEntry):
+        if(not os.path.exists("./Books/{id}/".format(id=book_entry.batchID))):
+            createBatch(batchID)
+        with open("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'w') as fp:
+            book_entry.saveToJSONFile(fp)
+    @classmethod
+    def getBook(cls, batch_id, book_id) -> BookEntry:
+        book_entry = BookEntry()
+        with open("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'r') as fp:
+            book_entry.loadFromJSONFile(fp)
+        return book_entry

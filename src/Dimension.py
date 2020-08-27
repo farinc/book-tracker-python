@@ -1,6 +1,6 @@
 class Dimension: 
 
-    def __init__(self, width: float, height: float):
+    def __init__(self, width: float = 0, height: float = 0):
         super().__init__()
 
         self._width: float = width

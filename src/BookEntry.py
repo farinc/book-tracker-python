@@ -2,8 +2,25 @@ import json
 from src.Status import Status
 from src.Dimension import Dimension
 from src.BookType import BookType
-from src.BookType import bookEnumEncoder
-from src.BookType import bookEnumDecoder
+
+class bookEnumEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if type(obj) is BookType:
+            return {"__type_enum__": obj.name}
+        if type(obj) is Status
+            return {"__status_enum__": obj.name}
+        return json.JSONEncoder.default(self, obj)
+
+def bookEnumDecoder(d):
+    if "__book_enum__" in d:
+        name = d["__book_enum__"]
+        return getattr(BookType, name)
+    if "__status_enum__" in d:
+        name = d["__status_enum__"]
+        return getattr(Status, name)
+    return d
+
+
 class BookEntry:
     
     def __init__(self):
@@ -20,13 +37,13 @@ class BookEntry:
         self._booktype: BookType = BookType.UNDEFINED
         self._extra: str = None
 
-        self._pageDim: Dimension = None
+        self._pageDim: Dimension = Dimension()
         self._pageMaterial: str = None
         self._pages: int = None
         self._signitures: int = None
         self._pagesPerSigniture: int = None
 
-        self._coverDim: Dimension = None
+        self._coverDim: Dimension = Dimension()
         self._coverColor: str = None
         self._coverMaterial: str = None
 

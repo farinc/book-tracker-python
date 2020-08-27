@@ -2,7 +2,7 @@ from src.BookEntry import BookEntry
 from src.BookType import BookType
 import math as Math
 import json
-
+import os
 class Cost:
 
     def __init__(self):
@@ -24,7 +24,8 @@ class Cost:
             self.headbandPrice = 0.1
             self.superPrice = 0.02
             self.ribbonPrice = 0.10
-
+            if(os.path.)
+            self.saveToJSON()
             self.loadFromJSON()
 
     def saveToJSONFile(self, fp) -> str:
