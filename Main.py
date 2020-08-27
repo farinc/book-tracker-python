@@ -67,6 +67,8 @@ class MainWindow(QMainWindow):
     def populateUi(self):
         if self.activeBook is None:
             return
+        print(self.activeBook.booktype)
+        print(self.activeBook.status)
         self.labelBookID.setText(str(self.activeBook.bookID))
         self.labelBatchID.setText(str(self.activeBook.batchID))
         self.lineCost.setText("")
