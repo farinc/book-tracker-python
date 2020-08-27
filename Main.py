@@ -82,7 +82,6 @@ class MainWindow(QMainWindow):
         self.spinSignitures.setValue(self.activeBook.signitures)
         self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
-        self.editCoverColor.setText(self.activeBook.coverColor)
         self.editHeadbandColor.setText(self.activeBook.headbandColor)
         self.editThreadColor.setText(self.activeBook.threadColor)
         self.editCoverMaterial.setText(self.activeBook.coverMaterial)
