@@ -3,7 +3,7 @@ from src.Status import Status
 from src.Dimension import Dimension
 from src.BookType import BookType
 
-class bookEnumEncoder(json.JSONEncoder):
+class bookEncoder(json.JSONEncoder):
     def default(self, obj):
         if type(obj) is BookType:
             return {"__type_enum__": obj.name}
@@ -13,7 +13,7 @@ class bookEnumEncoder(json.JSONEncoder):
             return {"__dimension__" : obj.__dict__} 
         return json.JSONEncoder.default(self, obj)
 
-def bookEnumDecoder(d):
+def bookDecoder(d):
     if "__type_enum__" in d:
         name = d["__type_enum__"]
         return getattr(BookType, name)
@@ -55,10 +55,10 @@ class BookEntry:
 
 
     def saveToJSONFile(self, fp) -> str:
-        return json.dump(self.__dict__, fp, cls=bookEnumEncoder)
+        return json.dump(self.__dict__, fp, cls=bookEncoder)
 
     def loadFromJSONFile(self, fp) -> None:
-        self.__dict__.update(json.load(fp, object_hook=bookEnumDecoder))
+        self.__dict__.update(json.load(fp, object_hook=bookDecoder))
  
     
     # BookID props

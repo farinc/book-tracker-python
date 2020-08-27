@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 from src.BookBrowse import bookBrowse
 from src.BookEntry import BookEntry
+from src.BookType import BookType
+from src.Status import Status
 
 class MainWindow(QMainWindow):
 
@@ -14,11 +16,13 @@ class MainWindow(QMainWindow):
 
         self._book: BookEntry = None
         self._hasActiveEntry = False
+
+        self.comboMode.currentIndexChanged.connect(self.toggleUi)
         
         self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
         self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
         self.actionLoad.triggered.connect(self.onLoadEntry)
-        self.actionClose.triggered.connect(self.onCloseSaveEntry)
+        self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
 
         self.setUiInactive()
 
@@ -58,16 +62,20 @@ class MainWindow(QMainWindow):
         self.spinPagesPerSig.setValue(0)
 
         self.editHeadbandColor.setText("")
+        self.editBox.setText("")
+        self.editSection.setText("")
         self.editThreadColor.setText("")
         self.editCoverMaterial.setText("")
         self.editPageMaterial.setText("")
         self.editExtra.setPlainText("")
 
     def populateUi(self):
+        """
+        Does the opposite of the clearUi function. With a load entry, it fills in all 
+        the values that are in the book entry
+        """
         if self.activeBook is None:
             return
-        print(self.activeBook.booktype)
-        print(self.activeBook.status)
         self.labelBookID.setText(str(self.activeBook.bookID))
         self.labelBatchID.setText(str(self.activeBook.batchID))
         self.lineCost.setText("")
@@ -83,16 +91,81 @@ class MainWindow(QMainWindow):
         self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
         self.editHeadbandColor.setText(self.activeBook.headbandColor)
+        self.editBox.setText(self.activeBook.box)
+        self.editSection.setText(self.activeBook.section)
         self.editThreadColor.setText(self.activeBook.threadColor)
         self.editCoverMaterial.setText(self.activeBook.coverMaterial)
         self.editPageMaterial.setText(self.activeBook.pageMaterial)
         self.editExtra.setPlainText(self.activeBook.extra)
+        
+        #Sets book type
+        self.comboBookType.setCurrentIndex(self.activeBook.booktype.value)
+        
+        #Sets the radio button
+        status = self.activeBook.status
+        if status is Status.NOPHOTO:
+            self.radioButtonNoPhoto.setChecked(True)
+        elif status is Status.DRAFT:
+            self.radioButtonDrafted.setChecked(True)
+        elif status is Status.DRAFTPHOTO:
+            self.radioButtonDraftedPhoto.setChecked(True)
+        elif status is Status.PUBLISHED:
+            self.radioButtonPublished.setChecked(True)
+        elif status is Status.SOLD:
+            self.radioButtonSold.setChecked(True)
+    
+    def saveToBook(self):
+        """
+        Saves what is in the ui to the book for preperation for serialize
+        """
+        # self.activeBook.cost = self.lineCost.text()
+
+        self.activeBook.pageDim.width = self.spinPageDimX.value()
+        self.activeBook.pageDim.height = self.spinPageDimY.value()
+
+        self.activeBook.coverDim.width = self.spinCoverDimX.value()
+        self.activeBook.coverDim.height = self.spinCoverDimY.value()
+
+        self.activeBook.spine = self.spinSpineDim.value()
+        self.activeBook.weight = self.spinWeight.value()
+        self.activeBook.pages = self.spinPageCount.value()
+        self.activeBook.signitures = self.spinSignitures.value()
+        self.activeBook.pagesPerSigniture = self.spinPagesPerSig.value()
+
+        self.activeBook.headbandColor = self.editHeadbandColor.text()
+        self.activeBook.box = self.editBox.text()
+        self.activeBook.section = self.editSection.text()
+        self.activeBook.threadColor = self.editThreadColor.text()
+        self.activeBook.coverMaterial = self.editCoverMaterial.text()
+        self.activeBook.pageMaterial = self.editPageMaterial.text()
+        self.activeBook.extra = self.editExtra.toPlainText()
+
+        #Sets the book type
+        self.activeBook.booktype = BookType.getType(self.comboBookType.currentIndex())
+        
+        #Sets the radio button
+        if self.radioButtonNoPhoto.isChecked():
+            self.activeBook.status = Status.NOPHOTO
+        elif self.radioButtonDrafted.isChecked():
+            self.activeBook.status = Status.DRAFT
+        elif self.radioButtonDraftedPhoto.isChecked():
+            self.activeBook.status = Status.DRAFTPHOTO
+        elif self.radioButtonPublished.isChecked():
+            self.activeBook.status = Status.PUBLISHED
+        elif self.radioButtonSold.isChecked():
+            self.activeBook.status = Status.SOLD
+
+    def toggleUi(self, index):
+        if index == 0:
+            self.discriptionFrame.setEnabled(True)
+        elif index == 1:
+            self.discriptionFrame.setEnabled(False)
 
     def setUiInactive(self):
         """
         Sets the ui in a state where there is no active book entry
         """
-        self.scrollAreaDescription.setEnabled(False) #Disable the stuff with props
+        self.toggleUi(1) #Disable the stuff with props
         self.actionClose.setEnabled(False) #Disable the close feature
         self.comboMode.setEnabled(False)
         self.hasActiveEntry = False
@@ -101,7 +174,7 @@ class MainWindow(QMainWindow):
         """
         Sets the ui in a state where the active book entry has been instance
         """
-        self.scrollAreaDescription.setEnabled(True) #Enable the stuff with props
+        self.toggleUi(0) #Enable the stuff with props
         self.actionClose.setEnabled(True) #Enable the close feature
         self.comboMode.setEnabled(True)
         self.hasActiveEntry = True
@@ -124,10 +197,11 @@ class MainWindow(QMainWindow):
 
     def onCloseSaveEntry(self):
         if self.hasActiveEntry:
+            self.saveToBook()
+
             #Save first
-            if self.activeBook is not None:
-                with open("./Books/{batchID}/{bookID}.json".format(batchID=self.activeBook.batchID, bookID=self.activeBook.bookID)) as fp:
-                    self.activeBook.saveToJSONFile(fp)
+            with open("./Books/{batchID}/{bookID}.json".format(batchID=self.activeBook.batchID, bookID=self.activeBook.bookID), 'w') as fp:
+                self.activeBook.saveToJSONFile(fp)
 
             #Clear ui
             self.clearEditUI()

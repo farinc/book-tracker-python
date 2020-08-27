@@ -41,9 +41,6 @@ class bookBrowse(QDialog):
         #TODO preview here
         self.labelPages.setText(str(self.book_entry.pages))
         self.labelBox.setText(self.book_entry.box)
-
-        print(self.book_entry.booktype)
-
         self.labelBookType.setText(self.book_entry.booktype.getDisplayText())
         self.labelCoverMaterial.setText(self.book_entry.coverMaterial)
     def openBook(self):
