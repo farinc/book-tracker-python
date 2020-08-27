@@ -51,7 +51,6 @@ class BookEntry:
         self._pagesPerSigniture: int = 0
 
         self._coverDim: Dimension = Dimension()
-        self._coverColor: str = str()
         self._coverMaterial: str = str()
 
 
@@ -229,16 +228,6 @@ class BookEntry:
     @coverDim.setter
     def coverDim(self, value: Dimension):
         self._coverDim = value
-
-    # coverColor props
-
-    @property
-    def coverColor(self):
-        return self._coverColor
-
-    @coverColor.setter
-    def coverColor(self, value: str):
-        self._coverColor = value
 
     # coverMaterial props
 

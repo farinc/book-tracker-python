@@ -3,7 +3,9 @@ from PyQt5 import uic
 import os
 import json
 from src.BookEntry import BookEntry
+from src.BookType import BookType
 from src.fs_utils import FsUtils
+
 class bookBrowse(QDialog):
     
     def __init__(self, parent):
@@ -37,6 +39,13 @@ class bookBrowse(QDialog):
         self.book_id = item.text()
         self.book_entry = FsUtils.getBook(self.batch_id, self.book_id)
         #TODO preview here
+        self.labelPages.setText(str(self.book_entry.pages))
+        self.labelBox.setText(self.book_entry.box)
+
+        print(self.book_entry.booktype)
+
+        self.labelBookType.setText(self.book_entry.booktype.getDisplayText())
+        self.labelCoverMaterial.setText(self.book_entry.coverMaterial)
     def openBook(self):
         self.main.onEntryLoaded(FsUtils.getBook(self.batch_id, self.book_id))
         self.close()
