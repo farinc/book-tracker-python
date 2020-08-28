@@ -40,7 +40,6 @@ class bookBrowse(QDialog):
         """
         self.book_id = item.text()
         self.book_entry = FsUtils.getBook(self.batch_id, self.book_id)
-        self.labelPages.setText(str(self.book_entry.pages))
         self.labelBox.setText(self.book_entry.box)
         self.labelBookType.setText(self.book_entry.booktype.getDisplayText())
         self.labelCoverMaterial.setText(self.book_entry.coverMaterial)

@@ -35,20 +35,20 @@ class BookEntry:
         self._bookID: int = 0
         self._batchID: int = 0
         self._box: str = str()
-        self._weight: float = 0.0
+        self._weight: float = float()
         self._status: Status = Status.UNDEFINED
         self._section: str = str()
-        self._spine: float = 0.0
+        self._spine: float = float()
         self._threadColor: str = str()
         self._headbandColor: str = str()
         self._booktype: BookType = BookType.UNDEFINED
         self._extra: str = str()
+        self._costExtra: float = float()
 
         self._pageDim: Dimension = Dimension()
         self._pageMaterial: str = str()
-        self._pages: int = 0
-        self._signitures: int = 0
-        self._pagesPerSigniture: int = 0
+        self._signitures: int = int()
+        self._pagesPerSigniture: int = int()
 
         self._coverDim: Dimension = Dimension()
         self._coverMaterial: str = str()
@@ -60,6 +60,8 @@ class BookEntry:
     def loadFromJSONFile(self, fp) -> None:
         self.__dict__.update(json.load(fp, object_hook=bookDecoder))
  
+    def calculatePaperCount(self):
+        return self.signitures * self.pagesPerSigniture
     
     # BookID props
 
@@ -238,3 +240,11 @@ class BookEntry:
     @coverMaterial.setter
     def coverMaterial(self, value: str):
         self._coverMaterial = value
+
+    @property
+    def costExtra(self):
+        return self._costExtra
+
+    @costExtra.setter
+    def costExtra(self, value: float):
+        self._costExtra = value

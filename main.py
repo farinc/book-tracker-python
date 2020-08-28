@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 from src.book_browse import bookBrowse
 from src.book_entry import BookEntry
 from src.book_type import BookType
+from src.cost import Cost
 from src.status import Status
 
 class MainWindow(QMainWindow):
@@ -15,14 +16,10 @@ class MainWindow(QMainWindow):
         uic.loadUi("./ui/mainwindow.ui", self)
 
         self._book: BookEntry = None
+        self._cost: Cost = None
         self._hasActiveEntry = False
 
-        self.comboMode.currentIndexChanged.connect(self.toggleUi)
-        
-        self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
-        self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
-        self.actionLoad.triggered.connect(self.onLoadEntry)
-        self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
+        self.setupSlots()
 
         self.setUiInactive()
 
@@ -42,6 +39,103 @@ class MainWindow(QMainWindow):
     def hasActiveEntry(self, value: bool):
         self._hasActiveEntry = value
 
+    @property
+    def cost(self):
+        return self._cost
+
+    @cost.setter
+    def cost(self, value: Cost):
+        self._cost = value
+
+    def setupSlots(self):
+        self.comboMode.currentIndexChanged.connect(self.toggleUi)
+        self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
+        self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
+        self.actionLoad.triggered.connect(self.onLoadEntry)
+        self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
+
+        #Setup slots for ui updating
+
+        #Dimensions
+        self.spinCoverDimX.valueChanged.connect(lambda value: self.onValueChanges("coverDimX", value))
+        self.spinCoverDimY.valueChanged.connect(lambda value: self.onValueChanges("coverDimY", value))
+        self.spinPageDimX.valueChanged.connect(lambda value: self.onValueChanges("pageDimX", value))
+        self.spinPageDimY.valueChanged.connect(lambda value: self.onValueChanges("pageDimY", value))
+        self.spinSignitures.valueChanged.connect(lambda value: self.onValueChanges("signitures", value))
+        self.spinSpineDim.valueChanged.connect(lambda value: self.onValueChanges("spine", value))
+        self.spinExtra.valueChanged.connect(lambda value: self.onValueChanges("extra_cost", value))
+        self.spinWeight.valueChanged.connect(lambda value: self.onValueChanges("weight", value))
+        self.spinPagesPerSig.valueChanged.connect(lambda value: self.onValueChanges("pages_per_sig", value))
+
+        #Text
+        self.editHeadbandColor.textEdited.connect(lambda text: self.onValueChanges("headband_color", text))
+        self.editThreadColor.textEdited.connect(lambda text: self.onValueChanges("thread_color", text))
+        self.editCoverMaterial.textEdited.connect(lambda text: self.onValueChanges("cover_material", text))
+        self.editPageMaterial.textEdited.connect(lambda text: self.onValueChanges("page_material", text))
+        self.editSection.textEdited.connect(lambda text: self.onValueChanges("section", text))
+        self.editBox.textEdited.connect(lambda text: self.onValueChanges("box", text))
+        self.editExtra.textChanged.connect(lambda: self.onValueChanges("extra", self.editExtra.toPlainText()))
+
+        # Combos 
+        self.comboBookType.currentIndexChanged.connect(lambda index: self.onValueChanges("book_type", index))
+        self.comboStatus.currentIndexChanged.connect(lambda index: self.onValueChanges("status", index))
+
+    def onValueChanges(self, cost_data_type: str, value):
+        """A slot function that updates the book with changes to the ui elements
+
+        Args:
+            cost_data_type (str): the data type that was changed
+            value (): the data to be changed, either a int, float, or str depending on data type
+        """
+        if self.activeBook is not None and self.hasActiveEntry:
+            if cost_data_type == "coverDimX":
+                self.activeBook.coverDim.width = value
+            elif cost_data_type == "coverDimY":
+                self.activeBook.coverDim.height = value
+            elif cost_data_type == "signitures":
+                self.activeBook.signitures = value
+            elif cost_data_type == "spine":
+                self.activeBook.spine = value
+            elif cost_data_type == "extra_cost":
+                self.activeBook.extraCost = value
+            elif cost_data_type == "weight":
+                self.activeBook.weight = value
+            elif cost_data_type == "pages_per_sig":
+                self.activeBook.pagesPerSigniture = value
+            elif cost_data_type == "book_type":
+                self.activeBook.booktype = BookType(value)
+            elif cost_data_type == "extra_cost":
+                self.activeBook.costExtra = value
+            elif cost_data_type == "headband_color":
+                self.activeBook.headbandColor = value
+            elif cost_data_type == "thread_color":
+                self.activeBook.threadColor = value
+            elif cost_data_type == "cover_material":
+                self.activeBook.coverMaterial = value
+            elif cost_data_type == "page_material":
+                self.activeBook.pageMaterial = value
+            elif cost_data_type == "section":
+                self.activeBook.section = value
+            elif cost_data_type == "box":
+                self.activeBook.box == value
+            elif cost_data_type == "extra":
+                self.activeBook.extra = value
+            elif cost_data_type == "status":
+                self.activeBook.status = Status(value)
+
+            #Update relavent fields
+
+            if self.cost.canBookBeEvalutated():
+                self.updateCost()
+            if self.activeBook.signitures is not None and self.activeBook.pagesPerSigniture is not None:
+                self.updatePages()
+
+    def updateCost(self):
+        self.spinCost.setValue(round(self.cost.getTotalCost(), 2))
+
+    def updatePages(self):
+        self.spinPages.setValue(self.activeBook.calculatePaperCount())
+
     def clearEditUI(self):
         """
         Clears the editing portion of the ui, including the bookID and batchID. 
@@ -49,7 +143,6 @@ class MainWindow(QMainWindow):
         """
         self.labelBookID.setText(" <None> ")
         self.labelBatchID.setText(" <None>")
-        self.lineCost.setText("")
 
         self.spinPageDimX.setValue(0.0)
         self.spinPageDimY.setValue(0.0)
@@ -57,9 +150,9 @@ class MainWindow(QMainWindow):
         self.spinCoverDimY.setValue(0.0)
         self.spinSpineDim.setValue(0.0)
         self.spinWeight.setValue(0.0)
-        self.spinPageCount.setValue(0)
         self.spinSignitures.setValue(0)
         self.spinPagesPerSig.setValue(0)
+        self.spinExtra.setValue(0.0)
 
         self.editHeadbandColor.setText("")
         self.editBox.setText("")
@@ -72,16 +165,16 @@ class MainWindow(QMainWindow):
         self.comboBookType.setCurrentIndex(0)
         self.comboStatus.setCurrentIndex(0)
 
+        self.spinCost.setValue(0.0)
+        self.spinPages.setValue(0)
+
     def populateUi(self):
         """
         Does the opposite of the clearUi function. With a load entry, it fills in all 
         the values that are in the book entry
         """
-        if self.activeBook is None:
-            return
         self.labelBookID.setText(str(self.activeBook.bookID))
         self.labelBatchID.setText(str(self.activeBook.batchID))
-        self.lineCost.setText("")
 
         self.spinPageDimX.setValue(self.activeBook.pageDim.width)
         self.spinPageDimY.setValue(self.activeBook.pageDim.height)
@@ -89,7 +182,6 @@ class MainWindow(QMainWindow):
         self.spinCoverDimY.setValue(self.activeBook.coverDim.height)
         self.spinSpineDim.setValue(self.activeBook.spine)
         self.spinWeight.setValue(self.activeBook.weight)
-        self.spinPageCount.setValue(self.activeBook.pages)
         self.spinSignitures.setValue(self.activeBook.signitures)
         self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
@@ -103,47 +195,26 @@ class MainWindow(QMainWindow):
         
         self.comboBookType.setCurrentIndex(self.activeBook.booktype.value)
         self.comboStatus.setCurrentIndex(self.activeBook.status.value)
-    
-    def saveToBook(self):
+
+        self.updateCost()
+        self.updatePages()
+
+    def toggleUi(self, flag: int):
+        """Sets the editing ui as disabled
+
+        Args:
+            floag (int): 0 if enable, 1 if disable
         """
-        Saves what is in the ui to the book for preperation for serialize
-        """
-        # self.activeBook.cost = self.lineCost.text()
-
-        self.activeBook.pageDim.width = self.spinPageDimX.value()
-        self.activeBook.pageDim.height = self.spinPageDimY.value()
-
-        self.activeBook.coverDim.width = self.spinCoverDimX.value()
-        self.activeBook.coverDim.height = self.spinCoverDimY.value()
-
-        self.activeBook.spine = self.spinSpineDim.value()
-        self.activeBook.weight = self.spinWeight.value()
-        self.activeBook.pages = self.spinPageCount.value()
-        self.activeBook.signitures = self.spinSignitures.value()
-        self.activeBook.pagesPerSigniture = self.spinPagesPerSig.value()
-
-        self.activeBook.headbandColor = self.editHeadbandColor.text()
-        self.activeBook.box = self.editBox.text()
-        self.activeBook.section = self.editSection.text()
-        self.activeBook.threadColor = self.editThreadColor.text()
-        self.activeBook.coverMaterial = self.editCoverMaterial.text()
-        self.activeBook.pageMaterial = self.editPageMaterial.text()
-        self.activeBook.extra = self.editExtra.toPlainText()
-
-        #Sets the book type
-        self.activeBook.booktype = BookType(self.comboBookType.currentIndex())
-        self.activeBook.status = Status(self.comboStatus.currentIndex())
-
-    def toggleUi(self, index):
-        if index == 0:
+        if flag == 0:
             self.discriptionFrame.setEnabled(True)
-        elif index == 1:
+        elif flag == 1:
             self.discriptionFrame.setEnabled(False)
 
     def setUiInactive(self):
         """
         Sets the ui in a state where there is no active book entry
         """
+        self.clearEditUI() #Clear the ui interface
         self.toggleUi(1) #Disable the stuff with props
         self.actionClose.setEnabled(False) #Disable the close feature
         self.comboMode.setEnabled(False)
@@ -153,6 +224,7 @@ class MainWindow(QMainWindow):
         """
         Sets the ui in a state where the active book entry has been instance
         """
+        self.populateUi() #Load the book data into ui
         self.toggleUi(0) #Enable the stuff with props
         self.actionClose.setEnabled(True) #Enable the close feature
         self.comboMode.setEnabled(True)
@@ -163,10 +235,9 @@ class MainWindow(QMainWindow):
         dlg.exec()
 
     def onEntryLoaded(self, book: BookEntry):
-        self.setUiActive()
-        self.hasActiveEntry = True
         self.activeBook = book
-        self.populateUi()
+        self.cost = Cost(book)
+        self.setUiActive()
 
     def onNewEntryOnCurrentBatch(self):
         pass
@@ -176,14 +247,12 @@ class MainWindow(QMainWindow):
 
     def onCloseSaveEntry(self):
         if self.hasActiveEntry:
-            self.saveToBook()
 
             #Save first
             with open("./Books/{batchID}/{bookID}.json".format(batchID=self.activeBook.batchID, bookID=self.activeBook.bookID), 'w') as fp:
                 self.activeBook.saveToJSONFile(fp)
 
             #Clear ui
-            self.clearEditUI()
             self.setUiInactive()
 
 app = QApplication(sys.argv)
