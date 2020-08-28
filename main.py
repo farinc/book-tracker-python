@@ -8,6 +8,7 @@ from src.book_type import BookType
 from src.cost import Cost
 from src.status import Status
 from src.fs_utils import FsUtils
+from src.price_breakdown import PriceBreakdown
 
 class MainWindow(QMainWindow):
 
@@ -49,11 +50,14 @@ class MainWindow(QMainWindow):
         self._cost = value
 
     def setupSlots(self):
+        # General button push slots
+
         self.comboMode.currentIndexChanged.connect(self.toggleUi)
         self.actionNewCurrent.triggered.connect(self.onNewEntryOnCurrentBatch)
         self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
         self.actionLoad.triggered.connect(self.onLoadEntry)
         self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
+        self.buttonCostBreakdown.clicked.connect(self.onOpenBreakdown)
 
         #Setup slots for ui updating
 
@@ -264,6 +268,10 @@ class MainWindow(QMainWindow):
 
             #Clear ui
             self.setUiInactive()
+
+    def onOpenBreakdown(self):
+        dlg = PriceBreakdown(self)
+        dlg.exec()
 
 app = QApplication(sys.argv)
 window = MainWindow()

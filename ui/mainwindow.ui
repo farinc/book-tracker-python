@@ -3,7 +3,7 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -206,7 +206,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-311</y>
          <width>821</width>
          <height>1015</height>
         </rect>
@@ -422,7 +422,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButtonCostOverview">
+               <widget class="QPushButton" name="buttonCostBreakdown">
                 <property name="text">
                  <string>Cost Breakdown</string>
                 </property>
@@ -1005,7 +1005,7 @@
   <tabstop>comboBookType</tabstop>
   <tabstop>comboMode</tabstop>
   <tabstop>pushButtonGenStoreDiscription</tabstop>
-  <tabstop>pushButtonCostOverview</tabstop>
+  <tabstop>buttonCostBreakdown</tabstop>
   <tabstop>scrollAreaDescription</tabstop>
   <tabstop>editExtra</tabstop>
  </tabstops>
