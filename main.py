@@ -7,6 +7,7 @@ from src.book_entry import BookEntry
 from src.book_type import BookType
 from src.cost import Cost
 from src.status import Status
+from src.fs_utils import FsUtils
 
 class MainWindow(QMainWindow):
 
@@ -92,12 +93,14 @@ class MainWindow(QMainWindow):
                 self.activeBook.coverDim.width = value
             elif cost_data_type == "coverDimY":
                 self.activeBook.coverDim.height = value
+            elif cost_data_type == "pageDimX":
+                self.activeBook.pageDim.width = value
+            elif cost_data_type == "pageDimY":
+                self.activeBook.pageDim.height = value
             elif cost_data_type == "signitures":
                 self.activeBook.signitures = value
             elif cost_data_type == "spine":
                 self.activeBook.spine = value
-            elif cost_data_type == "extra_cost":
-                self.activeBook.extraCost = value
             elif cost_data_type == "weight":
                 self.activeBook.weight = value
             elif cost_data_type == "pages_per_sig":
@@ -125,13 +128,14 @@ class MainWindow(QMainWindow):
 
             #Update relavent fields
 
-            if self.cost.canBookBeEvalutated():
-                self.updateCost()
-            if self.activeBook.signitures is not None and self.activeBook.pagesPerSigniture is not None:
-                self.updatePages()
+            self.updateCost()
+            self.updatePages()
 
     def updateCost(self):
-        self.spinCost.setValue(round(self.cost.getTotalCost(), 2))
+        if self.cost.canBookBeEvalutated():
+            self.spinCost.setValue(round(self.cost.getTotalCost(), 2))
+        else:
+            self.spinCost.setValue(0.0)
 
     def updatePages(self):
         self.spinPages.setValue(self.activeBook.calculatePaperCount())
@@ -183,6 +187,7 @@ class MainWindow(QMainWindow):
         self.spinSpineDim.setValue(self.activeBook.spine)
         self.spinWeight.setValue(self.activeBook.weight)
         self.spinSignitures.setValue(self.activeBook.signitures)
+        self.spinExtra.setValue(self.activeBook.costExtra)
         self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
         self.editHeadbandColor.setText(self.activeBook.headbandColor)
@@ -214,21 +219,26 @@ class MainWindow(QMainWindow):
         """
         Sets the ui in a state where there is no active book entry
         """
+        self.hasActiveEntry = False
         self.clearEditUI() #Clear the ui interface
+        self.cost = None
         self.toggleUi(1) #Disable the stuff with props
         self.actionClose.setEnabled(False) #Disable the close feature
         self.comboMode.setEnabled(False)
-        self.hasActiveEntry = False
 
     def setUiActive(self):
         """
         Sets the ui in a state where the active book entry has been instance
         """
+        self.initCost()
         self.populateUi() #Load the book data into ui
         self.toggleUi(0) #Enable the stuff with props
         self.actionClose.setEnabled(True) #Enable the close feature
         self.comboMode.setEnabled(True)
         self.hasActiveEntry = True
+
+    def initCost(self):
+        self.cost = Cost(self.activeBook)
 
     def onLoadEntry(self):
         dlg = bookBrowse(self)
@@ -236,21 +246,21 @@ class MainWindow(QMainWindow):
 
     def onEntryLoaded(self, book: BookEntry):
         self.activeBook = book
-        self.cost = Cost(book)
         self.setUiActive()
 
     def onNewEntryOnCurrentBatch(self):
-        pass
+        self.activeBook = FsUtils.createBookCurrentBatch()
+        self.setUiActive()
 
     def onNewEntryOnNewBatch(self):
-        pass
+        self.activeBook = FsUtils.createBookNewBatch()
+        self.setUiActive()
 
     def onCloseSaveEntry(self):
         if self.hasActiveEntry:
 
             #Save first
-            with open("./Books/{batchID}/{bookID}.json".format(batchID=self.activeBook.batchID, bookID=self.activeBook.bookID), 'w') as fp:
-                self.activeBook.saveToJSONFile(fp)
+            FsUtils.saveBook(self.activeBook)
 
             #Clear ui
             self.setUiInactive()

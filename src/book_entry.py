@@ -30,25 +30,25 @@ def bookDecoder(d):
 
 class BookEntry:
     
-    def __init__(self):
+    def __init__(self, bookID: int, batchID: int):
 
-        self._bookID: int = 0
-        self._batchID: int = 0
+        self._bookID: int = bookID
+        self._batchID: int = batchID
         self._box: str = str()
-        self._weight: float = float()
+        self._weight: float = 0.0
         self._status: Status = Status.UNDEFINED
         self._section: str = str()
-        self._spine: float = float()
+        self._spine: float = 0.0
         self._threadColor: str = str()
         self._headbandColor: str = str()
         self._booktype: BookType = BookType.UNDEFINED
         self._extra: str = str()
-        self._costExtra: float = float()
+        self._costExtra: float = 0.0
 
         self._pageDim: Dimension = Dimension()
         self._pageMaterial: str = str()
-        self._signitures: int = int()
-        self._pagesPerSigniture: int = int()
+        self._signitures: int = 0
+        self._pagesPerSigniture: int = 0
 
         self._coverDim: Dimension = Dimension()
         self._coverMaterial: str = str()

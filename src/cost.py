@@ -49,12 +49,17 @@ class Cost:
             bool: True if the book can be evaluated and False otherwise
         """
         if self.book is not None:
-            isCoverDim = self.book.coverDim is not None
-            isSpine = self.book.spine is not None
-            isSignitures = self.book.signitures is not None
-            isBookType = self.book.booktype is not None
 
-            return isCoverDim and isSpine and isSignitures and isBookType
+            hasCoverDim = self.book.coverDim.width > 0 and self.book.coverDim.height > 0
+            hasPageDim = self.book.pageDim.width > 0 and self.book.pageDim.height > 0
+            print(hasPageDim)
+            hasSpine = self.book.spine > 0
+            hasPageCount = self.book.calculatePaperCount() > 0
+            hasBookType = self.book.booktype is not BookType.UNDEFINED
+
+            flag = hasCoverDim and hasPageDim and hasSpine and hasPageCount and hasBookType
+            #print(flag)
+            return flag
         return False
 
     def getTotalCost(self) -> float:
@@ -72,7 +77,7 @@ class Cost:
         return total
 
     def getExtraCosts(self) -> float:
-        return self.book.extraCost + self.pvaCost
+        return self.book.costExtra + self.pvaCost
         
     def getBoardCost(self) -> float:
         """Gets the cost for the board (used for the cover)

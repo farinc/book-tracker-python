@@ -1,1 +1,1 @@
-__all__ = ["cost", "book_entry", "book_type", "dimension", "status", "book_browse"]
+__all__ = ["cost", "book_entry", "book_type", "dimension", "status", "book_browse", "fs_utils"]
