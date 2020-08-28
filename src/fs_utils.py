@@ -58,9 +58,6 @@ class FsUtils:
         book_id = cls._getNewBookID()
         batch_id = cls.getCurrentBatch()
 
-        print("Book ID: "+ str(book_id))
-        print("Batch ID: "+ str(batch_id))
-
         book_entry = BookEntry(book_id,batch_id)
         cls.saveBook(book_entry)
         return book_entry
