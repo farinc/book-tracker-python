@@ -76,7 +76,7 @@ class BookEntry:
     # batchID props
     @property
     def batchID(self):
-        return self._bookID
+        return self._batchID
 
     @batchID.setter
     def batchID(self, value: int):

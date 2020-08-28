@@ -5,8 +5,14 @@ from src.book_entry import BookEntry
 class FsUtils:
 
     @classmethod
+    def _createBase(cls):
+        if not os.path.isdir('Books'):
+            os.mkdir('Books')
+
+    @classmethod
     def getBatches(cls) -> list:
         batches = []
+        cls._createBase()
         for b in os.listdir("./Books"):
             if os.path.isdir("./Books/" +b):
                 batches.append(b)
@@ -14,6 +20,7 @@ class FsUtils:
 
     @classmethod
     def getBooksInBatch(cls, batchID: int) -> list:
+        cls._createBase()
         p = "./Books/{batch_id}/".format(batch_id=batchID)
         books = []
         for e in os.listdir(p):
@@ -23,6 +30,7 @@ class FsUtils:
 
     @classmethod
     def _createBatch(cls, batchID):
+        cls._createBase()
         os.mkdir("./Books/{batch_id}/".format(batch_id=batchID))
 
     @classmethod
@@ -47,7 +55,13 @@ class FsUtils:
 
     @classmethod
     def createBookCurrentBatch(cls) -> BookEntry:
-        book_entry = BookEntry(cls._getNewBookID(), cls.getCurrentBatch())
+        book_id = cls._getNewBookID()
+        batch_id = cls.getCurrentBatch()
+
+        print("Book ID: "+ str(book_id))
+        print("Batch ID: "+ str(batch_id))
+
+        book_entry = BookEntry(book_id,batch_id)
         cls.saveBook(book_entry)
         return book_entry
 
@@ -61,7 +75,10 @@ class FsUtils:
     def getCurrentBatch(cls) -> int:
         batches = cls.getBatches()
         batchIDs = [int(b) for b in batches]
-        return max(batchIDs)
+        if batchIDs.__len__() > 0:
+            return max(batchIDs)
+        else:
+            return 0
 
     @classmethod
     def _getNewBatchID(cls):
@@ -75,5 +92,7 @@ class FsUtils:
         for batchID in batchIDs: #Get books for a given batch
             books_in_batch = cls.getBooksInBatch(batchID)
             bookIDs.extend([int(b.replace(".json", "")) for b in books_in_batch]) #Add to bookIDs to the total
-        newID = max(bookIDs) + 1 #From the total list of books, get the max value
-        return newID
+        if bookIDs.__len__() > 0: 
+            return max(bookIDs) + 1 #From the total list of books, get the max value
+        else:
+            return 0

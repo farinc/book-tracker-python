@@ -120,7 +120,7 @@ class MainWindow(QMainWindow):
             elif cost_data_type == "section":
                 self.activeBook.section = value
             elif cost_data_type == "box":
-                self.activeBook.box == value
+                self.activeBook.box = value
             elif cost_data_type == "extra":
                 self.activeBook.extra = value
             elif cost_data_type == "status":

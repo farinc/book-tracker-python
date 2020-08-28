@@ -52,7 +52,6 @@ class Cost:
 
             hasCoverDim = self.book.coverDim.width > 0 and self.book.coverDim.height > 0
             hasPageDim = self.book.pageDim.width > 0 and self.book.pageDim.height > 0
-            print(hasPageDim)
             hasSpine = self.book.spine > 0
             hasPageCount = self.book.calculatePaperCount() > 0
             hasBookType = self.book.booktype is not BookType.UNDEFINED
