@@ -24,6 +24,7 @@ class Cost:
         self.superPrice: float = 0.02
         self.ribbonPrice: float = 0.10
         self.pvaCost: float = 0.5
+        self.endpageCost: float = 0.5
 
         self._book: BookEntry = book
 
@@ -75,7 +76,7 @@ class Cost:
         return total
 
     def getExtraCosts(self) -> float:
-        return self.book.costExtra + self.pvaCost
+        return self.book.costExtra + self.pvaCost + self.endpageCost
         
     def getBoardCost(self) -> float:
         """Gets the cost for the board (used for the cover)
@@ -88,7 +89,7 @@ class Cost:
         paddedWidth = self.book.coverDim.width + self.paddingWidthBoard
         paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
 
-        sqInchBoard = paddedHeight * paddedWidth * 2 # the 2 is because there is always two boards for one book
+        sqInchBoard = paddedHeight * paddedWidth
         priceBoard = sqInchBoard * self.sqInchBoardPrice
         
         return priceBoard
@@ -122,7 +123,7 @@ class Cost:
 
         if(self.book.booktype is BookType.TRADITIONAL or self.book.booktype is BookType.QUARTER or self.book.booktype is BookType.COPTIC or self.book.booktype is BookType.COPTIC2NEEDLE or self.book.booktype is BookType.LONG):
             # added height is the padding for the thread length
-            threadLength = self.book.signitures * self.book.coverDim.height + self.book.coverDim.height
+            threadLength = (self.book.signitures * self.book.coverDim.height) + self.book.coverDim.height
             priceThread = threadLength * self.threadLengthPrice
 
             if self.book.booktype == BookType.COPTIC2NEEDLE:
@@ -173,13 +174,15 @@ class Cost:
         elif self.book.booktype is BookType.LONG or self.book.booktype is BookType.QUARTER or BookType.TRADITIONAL:
             paddedHeight = self.book.coverDim.height + self.paddingHeightBoard
             
-            paddedSpine = None
+            paddedSpine: float = self.book.spine
             if self.book.booktype == BookType.QUARTER:
-                paddedSpine = self.paddingSpineQuarter
+                paddedSpine += self.paddingSpineQuarter
             elif self.book.booktype == BookType.LONG or self.book.booktype == BookType.TRADITIONAL:
-                paddedSpine = self.paddingSpineLongTrad
+                paddedSpine += self.paddingSpineLongTrad
+
 
             paddedWidth = self.book.coverDim.width + self.paddingWidthBoard + paddedSpine
-            sqInchCloth = paddedWidth * paddedHeight
+            sqInchCloth = float(paddedWidth * paddedHeight)
+            print(sqInchCloth)
             return sqInchCloth * self.sqInchClothPrice
         return 0
