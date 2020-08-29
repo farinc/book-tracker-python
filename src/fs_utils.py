@@ -9,7 +9,7 @@ class FsUtils:
     def _resource_path(cls, relative_path: str) -> str:
         """ Get absolute path to resource, works for dev and for PyInstaller 
 
-        Credit: arboreal shark from SO link: https://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile
+        Credit: max shark from SO link: https://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile
         
         """
         try:
