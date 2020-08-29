@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Cost Breakdown</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	font: 12pt &quot;Arial&quot;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">

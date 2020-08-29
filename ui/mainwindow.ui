@@ -18,7 +18,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#centralwidget {
-	padding: 10px;
+	color: rgb(239, 41, 41);
 }</string>
   </property>
   <property name="documentMode">
@@ -26,9 +26,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">#centralwidget {
-	padding: 10px;
-	margin: 10px;
+    <string notr="true">* {
+	font: 12pt &quot;Arial&quot;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -57,7 +56,11 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
@@ -68,27 +71,13 @@
        <item>
         <widget class="QLabel" name="labelBookID">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="font">
-          <font>
-           <family>Courier</family>
-           <pointsize>12</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#labelBookID {
-	font: Courier;
-}</string>
-         </property>
          <property name="text">
-          <string> &lt;None&gt;</string>
+          <string>&lt;None&gt;</string>
          </property>
         </widget>
        </item>
@@ -102,7 +91,11 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -116,27 +109,13 @@
        <item>
         <widget class="QLabel" name="labelBatchID">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="font">
-          <font>
-           <family>Courier</family>
-           <pointsize>12</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#labelBatchID {
-	font: Courier;
-}</string>
-         </property>
          <property name="text">
-          <string> &lt;None&gt;</string>
+          <string>&lt;None&gt;</string>
          </property>
         </widget>
        </item>
@@ -169,7 +148,13 @@
           </sizepolicy>
          </property>
          <property name="font">
-          <font/>
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">#comboMode {
@@ -278,7 +263,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -318,7 +307,11 @@
                <widget class="QPlainTextEdit" name="editExtra">
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                </widget>
@@ -350,6 +343,12 @@
               </item>
               <item row="0" column="1">
                <widget class="QDoubleSpinBox" name="spinExtra">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="prefix">
                  <string>$</string>
                 </property>
@@ -374,7 +373,11 @@
              </property>
              <property name="font">
               <font>
+               <family>Arial</family>
                <pointsize>12</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -402,7 +405,11 @@
              </property>
              <property name="font">
               <font>
+               <family>Arial</family>
                <pointsize>12</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -430,7 +437,11 @@
              </property>
              <property name="font">
               <font>
+               <family>Arial</family>
                <pointsize>12</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -468,7 +479,11 @@
              </property>
              <property name="font">
               <font>
+               <family>Arial</family>
                <pointsize>12</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -495,7 +510,11 @@
                <widget class="QLabel" name="label_22">
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -575,7 +594,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -609,7 +632,11 @@
              </property>
              <property name="font">
               <font>
+               <family>Arial</family>
                <pointsize>12</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -649,7 +676,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -674,7 +705,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -827,7 +862,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -839,7 +878,11 @@
                <widget class="QLabel" name="label_20">
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
@@ -857,7 +900,11 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Arial</family>
                   <pointsize>12</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
