@@ -58,7 +58,6 @@ class Cost:
             hasBookType = self.book.booktype is not BookType.UNDEFINED
 
             flag = hasCoverDim and hasPageDim and hasSpine and hasPageCount and hasBookType
-            #print(flag)
             return flag
         return False
 
@@ -183,6 +182,5 @@ class Cost:
 
             paddedWidth = self.book.coverDim.width + self.paddingWidthBoard + paddedSpine
             sqInchCloth = float(paddedWidth * paddedHeight)
-            print(sqInchCloth)
             return sqInchCloth * self.sqInchClothPrice
         return 0
