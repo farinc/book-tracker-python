@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QDialog, QListWidgetItem
 from PyQt5 import uic
 from src.book_type import BookType
+from src.fs_utils import FsUtils
 
 class PriceBreakdown(QDialog):
 
@@ -8,7 +9,7 @@ class PriceBreakdown(QDialog):
         super().__init__(parent)
         cost = parent.cost
         book = parent.activeBook
-        uic.loadUi("./ui/costbreakdown.ui", self)
+        uic.loadUi(FsUtils._resource_path("./ui/costbreakdown.ui"), self)
 
         if cost.canBookBeEvalutated() :
             self.spinDisplayCover.setValue(cost.getBoardCost())

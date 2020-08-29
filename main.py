@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
-        uic.loadUi(r"./ui/mainwindow.ui", self)
+        uic.loadUi(FsUtils._resource_path("./ui/mainwindow.ui"), self)
 
         self._book: BookEntry = None
         self._cost: Cost = None

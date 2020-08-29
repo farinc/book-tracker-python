@@ -1,27 +1,46 @@
 import os
 import math
+import sys
 from src.book_entry import BookEntry
 
 class FsUtils:
 
     @classmethod
+    def _resource_path(cls, relative_path: str) -> str:
+        """ Get absolute path to resource, works for dev and for PyInstaller 
+
+        Credit: arboreal shark from SO link: https://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile
+        
+        """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+    @classmethod
     def _createBase(cls):
-        if not os.path.isdir(r'Books'):
-            os.mkdir(r'Books')
+        p = cls._resource_path('./Books')
+        if not os.path.isdir(p):
+            os.mkdir(p)
 
     @classmethod
     def getBatches(cls) -> list:
         batches = []
+        p = cls._resource_path('./Books')
+
         cls._createBase()
-        for b in os.listdir(r"./Books"):
-            if os.path.isdir(r"./Books/" +b):
+        for b in os.listdir(p):
+            if os.path.isdir(cls._resource_path("./Books/" + b)):
                 batches.append(b)
         return batches
 
     @classmethod
     def getBooksInBatch(cls, batchID: int) -> list:
         cls._createBase()
-        p = r"./Books/{batch_id}/".format(batch_id=batchID)
+        p = cls._resource_path("./Books/{batch_id}/".format(batch_id=batchID))
         books = []
         for e in os.listdir(p):
             if os.path.isfile(p+"/"+e):
@@ -31,7 +50,7 @@ class FsUtils:
     @classmethod
     def _createBatch(cls, batchID):
         cls._createBase()
-        os.mkdir(r"./Books/{batch_id}/".format(batch_id=batchID))
+        os.mkdir(cls._resource_path("./Books/{batch_id}/".format(batch_id=batchID)))
 
     @classmethod
     def _createNewBatch(cls) -> int:
@@ -41,15 +60,15 @@ class FsUtils:
 
     @classmethod
     def saveBook(cls, book_entry : BookEntry):
-        if(not os.path.exists(r"./Books/{id}/".format(id=book_entry.batchID))):
+        if(not os.path.exists(cls._resource_path("./Books/{id}/".format(id=book_entry.batchID)))):
             cls._createBatch(book_entry.batchID)
-        with open(r"./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID), 'w') as fp:
+        with open(cls._resource_path("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)), 'w') as fp:
             book_entry.saveToJSONFile(fp)
             
     @classmethod
     def getBook(cls, batch_id, book_id) -> BookEntry:
         book_entry = BookEntry(book_id, batch_id)
-        with open(r"./Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id), 'r') as fp:
+        with open(cls._resource_path("./Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id)), 'r') as fp:
             book_entry.loadFromJSONFile(fp)
             return book_entry
 
