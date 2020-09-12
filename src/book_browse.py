@@ -20,7 +20,8 @@ class bookBrowse(QDialog):
         discover all batches in the main directory
         """
         batches = FsUtils.get_batches()
-        self.batchesList.addItems(batches)
+        if batches is not None:
+            self.batchesList.addItems(batches)
         
         self.batchesList.itemClicked.connect(self.showBooks)
         self.booksList.itemClicked.connect(self.loadBook)

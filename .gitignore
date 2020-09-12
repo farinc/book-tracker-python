@@ -3,5 +3,5 @@ __pycache__/
 Books
 dist
 build
-.spec
+*.spec
 settings.json
