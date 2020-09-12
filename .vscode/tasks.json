@@ -13,10 +13,10 @@
                 "isDefault": true
             },
             "windows":{
-                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --add-data \"ui/*.ui;ui\" --add-data \"main.ico;.\" main.py"
+                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --name=BookTracker --add-data \"ui/*.ui;ui\" --add-data \"main.ico;.\" main.py"
             },
             "linux":{
-                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --add-data \"ui/*.ui:ui\" --add-data \"main.ico:.\" main.py"
+                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --name=BookTracker --add-data \"ui/*.ui:ui\" --add-data \"main.ico:.\" main.py"
             }
         }
     ]
