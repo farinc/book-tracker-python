@@ -6,11 +6,17 @@
         {
             "label": "build from pyinstaller",
             "type": "shell",
-            "command": "pyinstaller --windowed --add-data 'ui/*.ui:ui' main.py",
+            "command": "pyinstaller",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "windows":{
+                "command": "pyinstaller --onefile --windowed --add-data 'ui/*.ui;ui' main.py"
+            },
+            "linux":{
+                "command": "pyinstaller --onefile --windowed --add-data 'ui/*.ui:ui' main.py"
             }
         }
     ]

@@ -20,8 +20,6 @@ class FsUtils:
             base_path = os.path.abspath(".")
 
         p = os.path.join(base_path, relative_path)
-        cls.logging.debug("Hello?")
-
         return p
 
     @classmethod
