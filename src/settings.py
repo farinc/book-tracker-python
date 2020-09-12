@@ -12,6 +12,7 @@ class Settings(QDialog):
         uic.loadUi(FsUtils.get_resource("/ui/settings.ui"), self)
         self.pushChangeDirectory.clicked.connect(self.changeDictory)
         self.accepted.connect(self.saveSettings)
+        self.lineDirectory.setText(FsUtils.get_book_dir())
 
     def changeDictory(self):
         dlg = QFileDialog(self, "Pick a Books Directory", "~/")
@@ -22,8 +23,7 @@ class Settings(QDialog):
 
     def onDirectorySelected(self, path):
         FsUtils.set_books_dir(path)
+        self.lineDirectory.setText(path)
 
     def saveSettings(self):
-        settings = FsUtils.get_resource("settings.json")
-        with open(settings, 'w') as fp:
-            json.dump({"books_path": FsUtils.book_path}, fp)
+        FsUtils.save_settings()

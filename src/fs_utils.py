@@ -2,6 +2,7 @@ import os
 import math
 import sys
 import logging
+import json
 from src.book_entry import BookEntry
 
 class FsUtils:
@@ -55,6 +56,23 @@ class FsUtils:
             books.append(e)
         
         return books
+
+    @classmethod
+    def load_settings(cls):
+        js = None
+        if os.path.isfile("settings.json"):
+            with open("settings.json", 'r') as fp:
+                js = json.load(fp)
+            
+                if js is not None:
+                    f = js["books_path"]
+                    cls.set_books_dir(f)
+
+    @classmethod
+    def save_settings(cls):
+        settings = FsUtils.get_resource("settings.json")
+        with open(settings, 'w') as fp:
+            json.dump({"books_path": FsUtils.book_path}, fp)
 
     @classmethod
     def get_book_file(cls, book_id: int, batch_id: int):

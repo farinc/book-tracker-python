@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi(FsUtils.get_resource("/ui/mainwindow.ui"), self)
-        self.loadSettings()
+        FsUtils.load_settings()
 
         self._book: BookEntry = None
         self._cost: Cost = None
@@ -62,16 +62,6 @@ class MainWindow(QMainWindow):
     @cost.setter
     def cost(self, value: Cost):
         self._cost = value
-
-    def loadSettings(self):
-        js = None
-        with open("settings.json", 'r') as fp:
-            js = json.load(fp)
-        
-            if js is not None:
-                f = js["books_path"]
-                print(f)
-                FsUtils.set_books_dir(f)
 
     def setupSlots(self):
         # General button push slots
