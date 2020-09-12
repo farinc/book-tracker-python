@@ -1,6 +1,7 @@
 import os
 import math
 import sys
+import logging
 from src.book_entry import BookEntry
 
 class FsUtils:
@@ -18,39 +19,43 @@ class FsUtils:
         except Exception:
             base_path = os.path.abspath(".")
 
-        return os.path.join(base_path, relative_path)
+        p = os.path.join(base_path, relative_path)
+        cls.logging.debug("Hello?")
+
+        return p
 
     @classmethod
     def _createBase(cls):
-        p = cls._resource_path('./Books')
+        p = cls._resource_path('Books')
         if not os.path.isdir(p):
             os.mkdir(p)
 
     @classmethod
     def getBatches(cls) -> list:
         batches = []
-        p = cls._resource_path('./Books')
+        p = cls._resource_path('Books')
 
         cls._createBase()
         for b in os.listdir(p):
-            if os.path.isdir(cls._resource_path("./Books/" + b)):
+            if os.path.isdir(cls._resource_path("Books/" + b)):
                 batches.append(b)
         return batches
 
     @classmethod
     def getBooksInBatch(cls, batchID: int) -> list:
         cls._createBase()
-        p = cls._resource_path("./Books/{batch_id}/".format(batch_id=batchID))
+        p = cls._resource_path("Books/{batch_id}/".format(batch_id=batchID))
         books = []
         for e in os.listdir(p):
             if os.path.isfile(p+"/"+e):
                 books.append(e)
+        
         return books
 
     @classmethod
     def _createBatch(cls, batchID):
         cls._createBase()
-        os.mkdir(cls._resource_path("./Books/{batch_id}/".format(batch_id=batchID)))
+        os.mkdir(cls._resource_path("Books/{batch_id}/".format(batch_id=batchID)))
 
     @classmethod
     def _createNewBatch(cls) -> int:
@@ -60,15 +65,15 @@ class FsUtils:
 
     @classmethod
     def saveBook(cls, book_entry : BookEntry):
-        if(not os.path.exists(cls._resource_path("./Books/{id}/".format(id=book_entry.batchID)))):
+        if(not os.path.exists(cls._resource_path("Books/{id}/".format(id=book_entry.batchID)))):
             cls._createBatch(book_entry.batchID)
-        with open(cls._resource_path("./Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)), 'w') as fp:
+        with open(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)), 'w') as fp:
             book_entry.saveToJSONFile(fp)
             
     @classmethod
     def getBook(cls, batch_id, book_id) -> BookEntry:
         book_entry = BookEntry(book_id, batch_id)
-        with open(cls._resource_path("./Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id)), 'r') as fp:
+        with open(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id)), 'r') as fp:
             book_entry.loadFromJSONFile(fp)
             return book_entry
 

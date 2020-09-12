@@ -9,7 +9,7 @@ class PriceBreakdown(QDialog):
         super().__init__(parent)
         cost = parent.cost
         book = parent.activeBook
-        uic.loadUi(FsUtils._resource_path("./ui/costbreakdown.ui"), self)
+        uic.loadUi(FsUtils._resource_path("ui/costbreakdown.ui"), self)
 
         if cost.canBookBeEvalutated() :
             self.spinDisplayCover.setValue(cost.getBoardCost())

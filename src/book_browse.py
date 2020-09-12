@@ -11,7 +11,7 @@ class bookBrowse(QDialog):
     def __init__(self, parent):
         super().__init__(parent)
         self.main = parent
-        uic.loadUi(FsUtils._resource_path("./ui/bookBrowser.ui"), self)
+        uic.loadUi(FsUtils._resource_path("ui/bookBrowser.ui"), self)
         self.buttonOpen.clicked.connect(self.openBook)
         self.buttonCancel.clicked.connect(self.close)
         self.bookSelected = False
