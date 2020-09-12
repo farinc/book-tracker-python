@@ -6,14 +6,14 @@ class BookMove(QDialog):
     
     def __init__(self, parent, active_book):
         super().__init__(parent)
-        uic.loadUi(FsUtils._resource_path("ui/bookmove.ui"), self)
+        uic.loadUi(FsUtils.get_resource("/ui/bookmove.ui"), self)
         self.accepted.connect(self.moveBook)
         self.bookSelected = None
         self.book_id = None
         self.batch_id = None
         self.active_book = active_book
 
-        batches = FsUtils.getBatches()
+        batches = FsUtils.get_batches()
         batches.append("New Batch")
         self.batchesList.addItems(batches)
 
@@ -25,7 +25,7 @@ class BookMove(QDialog):
         show the book entries
         """
         self.book_id = item.text()
-        self.bookSelected = FsUtils.getBook(self.batch_id, self.book_id)
+        self.bookSelected = FsUtils.get_book(self.book_id, self.batch_id)
         self.labelBox.setText(self.bookSelected.box)
         self.labelBookType.setText(self.bookSelected.booktype.getDisplayText())
         self.labelCoverMaterial.setText(self.bookSelected.coverMaterial)
@@ -33,16 +33,16 @@ class BookMove(QDialog):
     def showBooks(self, item) :
 
         if item.text() == "New Batch":
-            self.batch_id: int = FsUtils.getNewBatchID()
+            self.batch_id: int = FsUtils.get_new_batch_id()
         else:
             self.batch_id : int = item.text()
         while self.booksList.count() > 0:
             self.booksList.takeItem(0)
-        books = [n.replace(".json", "") for n in FsUtils.getBooksInBatch(self.batch_id)]
+        books = [n.replace(".json", "") for n in FsUtils.get_books_in_batch(self.batch_id)]
 
         self.booksList.addItems(books)
 
     def moveBook(self):
         if self.batch_id is not None:
-            FsUtils.moveBook(self.active_book, self.batch_id)
+            FsUtils.move_book(self.active_book, self.batch_id)
             self.close()

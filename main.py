@@ -7,6 +7,7 @@ except ImportError:
     pass
 
 import sys
+import json
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
@@ -20,13 +21,14 @@ from src.status import Status
 from src.fs_utils import FsUtils
 from src.price_breakdown import PriceBreakdown
 from src.book_discription import BookDiscription
+from src.settings import Settings
 
 class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
-        uic.loadUi(FsUtils._resource_path("ui/mainwindow.ui"), self)
+        uic.loadUi(FsUtils.get_resource("/ui/mainwindow.ui"), self)
 
         self._book: BookEntry = None
         self._cost: Cost = None
@@ -60,6 +62,14 @@ class MainWindow(QMainWindow):
     def cost(self, value: Cost):
         self._cost = value
 
+    def loadSettings(self):
+        js = None
+        with open("settings.json", 'r') as fp:
+            js = json.load(fp)
+        
+        if js is not None:
+            FsUtils.set_books_dir(js["books_path"])
+
     def setupSlots(self):
         # General button push slots
 
@@ -69,6 +79,7 @@ class MainWindow(QMainWindow):
         self.actionLoad.triggered.connect(self.onLoadEntry)
         self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
         self.actionMove.triggered.connect(self.onMoveEntry)
+        self.actionSetting.triggered.connect(self.onSettingsOpen)
         self.buttonCostBreakdown.clicked.connect(self.onOpenBreakdown)
         self.pushButtonGenStoreDiscription.clicked.connect(self.onOpenGenDiscription)
 
@@ -276,18 +287,18 @@ class MainWindow(QMainWindow):
         self.setUiActive()
 
     def onNewEntryOnCurrentBatch(self):
-        self.activeBook = FsUtils.createBookCurrentBatch()
+        self.activeBook = FsUtils.create_book_current_batch()
         self.setUiActive()
 
     def onNewEntryOnNewBatch(self):
-        self.activeBook = FsUtils.createBookNewBatch()
+        self.activeBook = FsUtils.create_book_new_batch()
         self.setUiActive()
 
     def onCloseSaveEntry(self):
         if self.hasActiveEntry:
 
             #Save first
-            FsUtils.saveBook(self.activeBook)
+            FsUtils.save_book(self.activeBook)
 
             #Clear ui
             self.setUiInactive()
@@ -297,6 +308,10 @@ class MainWindow(QMainWindow):
             dlg = BookMove(self, self.activeBook)
             dlg.exec()
             self.populateUi() #reload the ui
+
+    def onSettingsOpen(self):
+        dlg = Settings(self)
+        dlg.exec()
 
     def onOpenBreakdown(self):
         dlg = PriceBreakdown(self)

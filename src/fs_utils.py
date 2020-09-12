@@ -6,100 +6,88 @@ from src.book_entry import BookEntry
 
 class FsUtils:
 
-    @classmethod
-    def _resource_path(cls, relative_path: str) -> str:
-        """ Get absolute path to resource, works for dev and for PyInstaller 
-
-        Credit: max shark from SO link: https://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile
-        
-        """
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-
-        p = os.path.join(base_path, relative_path)
-        return p
+    base_path = os.path.abspath(".")
+    book_path = os.path.abspath("./Books")
 
     @classmethod
-    def _createBase(cls):
-        p = cls._resource_path('Books')
-        if not os.path.isdir(p):
-            os.mkdir(p)
+    def get_base_dir(cls) -> str:
+        return cls.base_path
 
     @classmethod
-    def getBatches(cls) -> list:
+    def set_books_dir(cls, path):
+        cls.book_path = path
+
+    @classmethod
+    def get_book_dir(cls) -> str:
+        return cls.book_path
+
+    @classmethod
+    def get_resource(cls, path):
+        return cls.base_path + "/" + path
+
+    @classmethod
+    def get_batches(cls) -> list:
         batches = []
-        p = cls._resource_path('Books')
+        p = cls.get_book_dir()
 
-        cls._createBase()
         for b in os.listdir(p):
-            if os.path.isdir(cls._resource_path("Books/" + b)):
+            if os.path.isdir(p+"/"+b):
                 batches.append(b)
         return batches
 
     @classmethod
-    def getBooksInBatch(cls, batchID: int) -> list:
-        cls._createBase()
-        p = cls._resource_path("Books/{batch_id}/".format(batch_id=batchID))
+    def get_batch(cls, batch_id):
+        p = cls.get_book_dir() + "/{batch_id}".format(batch_id=str(batch_id))
+        if not os.path.isdir(p):
+            os.mkdir(p)
+        return p
+
+    @classmethod
+    def get_books_in_batch(cls, batch_id: int) -> list:
+        p = cls.get_batch(batch_id)
         books = []
-        if os.path.isdir(p):
-            for e in os.listdir(p):
-                if os.path.isfile(p+"/"+e):
-                    books.append(e)
+        for e in os.listdir(p):
+            books.append(e)
         
         return books
 
     @classmethod
-    def _createBatch(cls, batchID):
-        cls._createBase()
-        os.mkdir(cls._resource_path("Books/{batch_id}/".format(batch_id=batchID)))
+    def get_book_file(cls, book_id: int, batch_id: int):
+        return cls.get_batch(batch_id) + "/" + str(book_id) + ".json"            
 
     @classmethod
-    def _createNewBatch(cls) -> int:
-        id = cls.getNewBatchID()
-        cls._createBatch(id)
-        return id
-
-    @classmethod
-    def moveBook(cls, book_entry: BookEntry, new_batch: int):
-        os.remove(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)))
+    def move_book(cls, book_entry: BookEntry, new_batch: int):
+        os.remove(cls.get_book_file(book_entry.bookID, book_entry.batchID))
         book_entry.batchID = new_batch
-        cls.saveBook(book_entry)
+        cls.save_book(book_entry)
 
     @classmethod
-    def saveBook(cls, book_entry : BookEntry):
-        if(not os.path.exists(cls._resource_path("Books/{id}/".format(id=book_entry.batchID)))):
-            cls._createBatch(book_entry.batchID)
-        with open(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)), 'w') as fp:
+    def save_book(cls, book_entry : BookEntry):
+        with open(cls.get_book_file(book_entry.bookID, book_entry.batchID), 'w') as fp:
             book_entry.saveToJSONFile(fp)
             
     @classmethod
-    def getBook(cls, batch_id, book_id) -> BookEntry:
+    def get_book(cls, book_id, batch_id) -> BookEntry:
         book_entry = BookEntry(book_id, batch_id)
-        with open(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=batch_id, bookID=book_id)), 'r') as fp:
+        with open(cls.get_book_file(book_id, batch_id), 'r') as fp:
             book_entry.loadFromJSONFile(fp)
             return book_entry
 
     @classmethod
-    def createBookCurrentBatch(cls) -> BookEntry:
-        book_id = cls._getNewBookID()
-        batch_id = cls.getCurrentBatch()
-
-        book_entry = BookEntry(book_id,batch_id)
-        cls.saveBook(book_entry)
+    def create_book_current_batch(cls) -> BookEntry:
+        book_entry = BookEntry(cls.get_new_book_id(),cls.get_new_batch_id())
+        cls.save_book(book_entry)
         return book_entry
 
     @classmethod
-    def createBookNewBatch(cls) -> BookEntry:
-        book_entry = BookEntry(cls._getNewBookID(), cls._createNewBatch())
-        cls.saveBook(book_entry)
+    def create_book_new_batch(cls) -> BookEntry:
+        book_entry = BookEntry(cls.get_new_book_id(), cls.get_new_batch_id())
+        cls.save_book(book_entry)
         return book_entry
 
     @classmethod
-    def getCurrentBatch(cls) -> int:
-        batches = cls.getBatches()
+    def get_current_batch(cls) -> int:
+        batches = cls.get_batches()
         batchIDs = [int(b) for b in batches]
         if len(batchIDs) > 0:
             return max(batchIDs)
@@ -107,16 +95,16 @@ class FsUtils:
             return 0
 
     @classmethod
-    def getNewBatchID(cls):
-        return cls.getCurrentBatch() + 1
+    def get_new_batch_id(cls):
+        return cls.get_current_batch() + 1
 
     @classmethod
-    def _getNewBookID(cls) -> int:
-        batchs = cls.getBatches()
+    def get_new_book_id(cls) -> int:
+        batchs = cls.get_batches()
         batchIDs = [int(b) for b in batchs] #get batchIDs
         bookIDs = []
         for batchID in batchIDs: #Get books for a given batch
-            books_in_batch = cls.getBooksInBatch(batchID)
+            books_in_batch = cls.get_books_in_batch(batchID)
             bookIDs.extend([int(b.replace(".json", "")) for b in books_in_batch]) #Add to bookIDs to the total
         if len(bookIDs) > 0: 
             return max(bookIDs) + 1 #From the total list of books, get the max value

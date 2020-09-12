@@ -993,6 +993,8 @@
     <addaction name="menuNew_Entry"/>
     <addaction name="actionLoad"/>
     <addaction name="actionMove"/>
+    <addaction name="separator"/>
+    <addaction name="actionSetting"/>
    </widget>
    <addaction name="menuOptions"/>
   </widget>
@@ -1034,6 +1036,11 @@
   <action name="actionMove">
    <property name="text">
     <string>Move Entry</string>
+   </property>
+  </action>
+  <action name="actionSetting">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>
