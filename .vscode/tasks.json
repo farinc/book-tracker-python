@@ -13,10 +13,10 @@
                 "isDefault": true
             },
             "windows":{
-                "command": "pyinstaller --onefile --windowed --add-data 'ui/*.ui;ui' main.py"
+                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --add-data \"ui/*.ui;ui\" --add-data \"main.ico;.\" main.spec"
             },
             "linux":{
-                "command": "pyinstaller --onefile --windowed --add-data 'ui/*.ui:ui' main.py"
+                "command": "pyinstaller --noconfirm --windowed --icon=main.ico --add-data \"ui/*.ui:ui\" --add-data \"main.ico:.\" main.spec"
             }
         }
     ]

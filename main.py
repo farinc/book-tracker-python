@@ -1,7 +1,16 @@
+try:
+    # Include in try/except block if you're also targeting Mac/Linux
+    from PyQt5.QtWinExtras import QtWin
+    myappid = 'booktracker.10'
+    QtWin.setCurrentProcessExplicitAppUserModelID(myappid)    
+except ImportError:
+    pass
+
 import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from src.book_browse import bookBrowse
 from src.book_move import BookMove
 from src.book_entry import BookEntry
@@ -292,6 +301,7 @@ class MainWindow(QMainWindow):
         dlg.exec()
 
 app = QApplication(sys.argv)
+app.setWindowIcon(QIcon('main.ico'))
 window = MainWindow()
 window.show()
 
