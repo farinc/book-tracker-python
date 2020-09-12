@@ -13,7 +13,7 @@ class bookBrowse(QDialog):
         self.main = parent
         uic.loadUi(FsUtils._resource_path("ui/bookbrowser.ui"), self)
         self.accepted.connect(self.openBook)
-        self.bookSelected = False
+        self.bookSelected = None
         self.book_id = None
         self.batch_id = None
         """
@@ -37,11 +37,12 @@ class bookBrowse(QDialog):
         load book entry to show its data in the preview and so it can later pass it to main
         """
         self.book_id = item.text()
-        self.book_entry = FsUtils.getBook(self.batch_id, self.book_id)
-        self.labelBox.setText(self.book_entry.box)
-        self.labelBookType.setText(self.book_entry.booktype.getDisplayText())
-        self.labelCoverMaterial.setText(self.book_entry.coverMaterial)
+        self.bookSelected = FsUtils.getBook(self.batch_id, self.book_id)
+        self.labelBox.setText(self.bookSelected.box)
+        self.labelBookType.setText(self.bookSelected.booktype.getDisplayText())
+        self.labelCoverMaterial.setText(self.bookSelected.coverMaterial)
         
     def openBook(self):
-        self.main.onEntryLoaded(FsUtils.getBook(self.batch_id, self.book_id))
-        self.close()
+        if self.bookSelected is not None:
+            self.main.onEntryLoaded(FsUtils.getBook(self.batch_id, self.book_id))
+            self.close()

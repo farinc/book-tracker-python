@@ -8,10 +8,10 @@ class BookMove(QDialog):
         super().__init__(parent)
         uic.loadUi(FsUtils._resource_path("ui/bookmove.ui"), self)
         self.accepted.connect(self.moveBook)
-        self.bookSelected = False
+        self.bookSelected = None
         self.book_id = None
         self.batch_id = None
-        self.book_entry = active_book
+        self.active_book = active_book
 
         batches = FsUtils.getBatches()
         batches.append("New Batch")
@@ -25,10 +25,10 @@ class BookMove(QDialog):
         show the book entries
         """
         self.book_id = item.text()
-        self.viewing_book = FsUtils.getBook(self.batch_id, self.book_id)
-        self.labelBox.setText(self.viewing_book.box)
-        self.labelBookType.setText(self.viewing_book.booktype.getDisplayText())
-        self.labelCoverMaterial.setText(self.viewing_book.coverMaterial)
+        self.bookSelected = FsUtils.getBook(self.batch_id, self.book_id)
+        self.labelBox.setText(self.bookSelected.box)
+        self.labelBookType.setText(self.bookSelected.booktype.getDisplayText())
+        self.labelCoverMaterial.setText(self.bookSelected.coverMaterial)
 
     def showBooks(self, item) :
 
@@ -43,5 +43,6 @@ class BookMove(QDialog):
         self.booksList.addItems(books)
 
     def moveBook(self):
-        FsUtils.moveBook(self.book_entry, self.batch_id)
-        self.close()
+        if self.batch_id is not None:
+            FsUtils.moveBook(self.active_book, self.batch_id)
+            self.close()
