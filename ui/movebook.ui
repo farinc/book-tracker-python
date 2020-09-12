@@ -19,36 +19,7 @@
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QListWidget" name="batchesList">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QListWidget" name="booksList">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
+   <item row="0" column="2" rowspan="2">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -132,20 +103,31 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="buttonCancel">
-     <property name="styleSheet">
-      <string notr="true">#buttonCancel {
-	background-color: rgb(204, 0, 0);
-}</string>
-     </property>
-     <property name="text">
-      <string>Cancel</string>
+   <item row="0" column="0" rowspan="2">
+    <widget class="QListWidget" name="batchesList">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="buttonOpen">
+   <item row="0" column="1" rowspan="2">
+    <widget class="QListWidget" name="booksList">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="buttonMove">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -597,12 +579,30 @@
 }</string>
      </property>
      <property name="text">
-      <string>Open Book</string>
+      <string>Move Book</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="buttonCancel">
+     <property name="styleSheet">
+      <string notr="true">#buttonCancel {
+	background-color: rgb(204, 0, 0);
+}</string>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>buttonMove</tabstop>
+  <tabstop>buttonCancel</tabstop>
+  <tabstop>batchesList</tabstop>
+  <tabstop>booksList</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

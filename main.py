@@ -3,6 +3,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 from src.book_browse import bookBrowse
+from src.book_move import BookMove
 from src.book_entry import BookEntry
 from src.book_type import BookType
 from src.cost import Cost
@@ -57,6 +58,7 @@ class MainWindow(QMainWindow):
         self.actionNewNew.triggered.connect(self.onNewEntryOnNewBatch)
         self.actionLoad.triggered.connect(self.onLoadEntry)
         self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
+        self.actionMove.triggered.connect(self.onMoveEntry)
         self.buttonCostBreakdown.clicked.connect(self.onOpenBreakdown)
 
         #Setup slots for ui updating
@@ -152,6 +154,13 @@ class MainWindow(QMainWindow):
         self.labelBookID.setText(" <None> ")
         self.labelBatchID.setText(" <None>")
 
+        self.comboMode.setEnabled(False)
+        self.actionSaveClose.setEnabled(False)
+        self.actionNewCurrent.setEnabled(True)
+        self.actionNewNew.setEnabled(True)
+        self.actionLoad.setEnabled(True)
+        self.actionMove.setEnabled(False)
+
         self.spinPageDimX.setValue(0.0)
         self.spinPageDimY.setValue(0.0)
         self.spinCoverDimX.setValue(0.0)
@@ -183,6 +192,13 @@ class MainWindow(QMainWindow):
         """
         self.labelBookID.setText(str(self.activeBook.bookID))
         self.labelBatchID.setText(str(self.activeBook.batchID))
+
+        self.comboMode.setEnabled(True)
+        self.actionSaveClose.setEnabled(True)
+        self.actionNewCurrent.setEnabled(False)
+        self.actionNewNew.setEnabled(False)
+        self.actionLoad.setEnabled(False)
+        self.actionMove.setEnabled(True)
 
         self.spinPageDimX.setValue(self.activeBook.pageDim.width)
         self.spinPageDimY.setValue(self.activeBook.pageDim.height)
@@ -227,8 +243,6 @@ class MainWindow(QMainWindow):
         self.clearEditUI() #Clear the ui interface
         self.cost = None
         self.toggleUi(1) #Disable the stuff with props
-        self.actionClose.setEnabled(False) #Disable the close feature
-        self.comboMode.setEnabled(False)
 
     def setUiActive(self):
         """
@@ -237,8 +251,6 @@ class MainWindow(QMainWindow):
         self.initCost()
         self.populateUi() #Load the book data into ui
         self.toggleUi(0) #Enable the stuff with props
-        self.actionClose.setEnabled(True) #Enable the close feature
-        self.comboMode.setEnabled(True)
         self.hasActiveEntry = True
 
     def initCost(self):
@@ -268,6 +280,12 @@ class MainWindow(QMainWindow):
 
             #Clear ui
             self.setUiInactive()
+
+    def onMoveEntry(self):
+        if self.hasActiveEntry:
+            dlg = BookMove(self, self.activeBook)
+            dlg.exec()
+            self.populateUi() #reload the ui
 
     def onOpenBreakdown(self):
         dlg = PriceBreakdown(self)

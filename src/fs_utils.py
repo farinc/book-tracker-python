@@ -44,9 +44,10 @@ class FsUtils:
         cls._createBase()
         p = cls._resource_path("Books/{batch_id}/".format(batch_id=batchID))
         books = []
-        for e in os.listdir(p):
-            if os.path.isfile(p+"/"+e):
-                books.append(e)
+        if os.path.isdir(p):
+            for e in os.listdir(p):
+                if os.path.isfile(p+"/"+e):
+                    books.append(e)
         
         return books
 
@@ -57,9 +58,15 @@ class FsUtils:
 
     @classmethod
     def _createNewBatch(cls) -> int:
-        id = cls._getNewBatchID()
+        id = cls.getNewBatchID()
         cls._createBatch(id)
         return id
+
+    @classmethod
+    def moveBook(cls, book_entry: BookEntry, new_batch: int):
+        os.remove(cls._resource_path("Books/{batchID}/{bookID}.json".format(batchID=book_entry.batchID, bookID=book_entry.bookID)))
+        book_entry.batchID = new_batch
+        cls.saveBook(book_entry)
 
     @classmethod
     def saveBook(cls, book_entry : BookEntry):
@@ -100,7 +107,7 @@ class FsUtils:
             return 0
 
     @classmethod
-    def _getNewBatchID(cls):
+    def getNewBatchID(cls):
         return cls.getCurrentBatch() + 1
 
     @classmethod
