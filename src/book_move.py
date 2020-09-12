@@ -6,9 +6,8 @@ class BookMove(QDialog):
     
     def __init__(self, parent, active_book):
         super().__init__(parent)
-        uic.loadUi(FsUtils._resource_path("ui/movebook.ui"), self)
-        self.buttonMove.clicked.connect(self.moveBook)
-        self.buttonCancel.clicked.connect(self.close)
+        uic.loadUi(FsUtils._resource_path("ui/bookmove.ui"), self)
+        self.buttonBox.accepted.connect(self.moveBook)
         self.bookSelected = False
         self.book_id = None
         self.batch_id = None

@@ -256,7 +256,7 @@
               <item>
                <widget class="QLabel" name="label_13">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -336,6 +336,12 @@
              <layout class="QGridLayout" name="gridLayout_6">
               <item row="0" column="0">
                <widget class="QLabel" name="label_10">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Extra Cost</string>
                 </property>
@@ -381,7 +387,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Spine/Ribbon/Thread Color</string>
+              <string>Spine/Ribbon/Thread</string>
              </property>
             </widget>
            </item>
@@ -413,12 +419,12 @@
               </font>
              </property>
              <property name="text">
-              <string>Headband Color</string>
+              <string>End Page Color/Inner Cover</string>
              </property>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QLineEdit" name="editHeadbandColor">
+            <widget class="QLineEdit" name="editEndPageColor">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -587,7 +593,7 @@
               <item>
                <widget class="QLabel" name="label_16">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -1035,7 +1041,7 @@
   <tabstop>editPageMaterial</tabstop>
   <tabstop>editCoverMaterial</tabstop>
   <tabstop>editThreadColor</tabstop>
-  <tabstop>editHeadbandColor</tabstop>
+  <tabstop>editEndPageColor</tabstop>
   <tabstop>editBox</tabstop>
   <tabstop>editSection</tabstop>
   <tabstop>spinPageDimX</tabstop>

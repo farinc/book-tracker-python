@@ -19,6 +19,7 @@ from src.cost import Cost
 from src.status import Status
 from src.fs_utils import FsUtils
 from src.price_breakdown import PriceBreakdown
+from src.book_discription import BookDiscription
 
 class MainWindow(QMainWindow):
 
@@ -69,6 +70,7 @@ class MainWindow(QMainWindow):
         self.actionSaveClose.triggered.connect(self.onCloseSaveEntry)
         self.actionMove.triggered.connect(self.onMoveEntry)
         self.buttonCostBreakdown.clicked.connect(self.onOpenBreakdown)
+        self.pushButtonGenStoreDiscription.clicked.connect(self.onOpenGenDiscription)
 
         #Setup slots for ui updating
 
@@ -84,7 +86,7 @@ class MainWindow(QMainWindow):
         self.spinPagesPerSig.valueChanged.connect(lambda value: self.onValueChanges("pages_per_sig", value))
 
         #Text
-        self.editHeadbandColor.textEdited.connect(lambda text: self.onValueChanges("headband_color", text))
+        self.editEndPageColor.textEdited.connect(lambda text: self.onValueChanges("endpagecolor", text))
         self.editThreadColor.textEdited.connect(lambda text: self.onValueChanges("thread_color", text))
         self.editCoverMaterial.textEdited.connect(lambda text: self.onValueChanges("cover_material", text))
         self.editPageMaterial.textEdited.connect(lambda text: self.onValueChanges("page_material", text))
@@ -124,8 +126,8 @@ class MainWindow(QMainWindow):
                 self.activeBook.booktype = BookType(value)
             elif cost_data_type == "extra_cost":
                 self.activeBook.costExtra = value
-            elif cost_data_type == "headband_color":
-                self.activeBook.headbandColor = value
+            elif cost_data_type == "endpagecolor":
+                self.activeBook.endPageColor = value
             elif cost_data_type == "thread_color":
                 self.activeBook.threadColor = value
             elif cost_data_type == "cover_material":
@@ -180,7 +182,7 @@ class MainWindow(QMainWindow):
         self.spinPagesPerSig.setValue(0)
         self.spinExtra.setValue(0.0)
 
-        self.editHeadbandColor.setText("")
+        self.editEndPageColor.setText("")
         self.editBox.setText("")
         self.editSection.setText("")
         self.editThreadColor.setText("")
@@ -219,7 +221,7 @@ class MainWindow(QMainWindow):
         self.spinExtra.setValue(self.activeBook.costExtra)
         self.spinPagesPerSig.setValue(self.activeBook.pagesPerSigniture)
 
-        self.editHeadbandColor.setText(self.activeBook.headbandColor)
+        self.editEndPageColor.setText(self.activeBook.endPageColor)
         self.editBox.setText(self.activeBook.box)
         self.editSection.setText(self.activeBook.section)
         self.editThreadColor.setText(self.activeBook.threadColor)
@@ -298,6 +300,10 @@ class MainWindow(QMainWindow):
 
     def onOpenBreakdown(self):
         dlg = PriceBreakdown(self)
+        dlg.exec()
+
+    def onOpenGenDiscription(self):
+        dlg = BookDiscription(self, self.activeBook)
         dlg.exec()
 
 app = QApplication(sys.argv)

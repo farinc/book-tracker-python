@@ -40,7 +40,7 @@ class BookEntry:
         self._section: str = str()
         self._spine: float = 0.0
         self._threadColor: str = str()
-        self._headbandColor: str = str()
+        self._endpageColor: str = str()
         self._booktype: BookType = BookType.UNDEFINED
         self._extra: str = str()
         self._costExtra: float = 0.0
@@ -141,15 +141,15 @@ class BookEntry:
     def threadColor(self, value: str):
         self._threadColor = value
 
-    # headbandColor props
+    # endPageColor props
 
     @property
-    def headbandColor(self):
-        return self._headbandColor
+    def endPageColor(self):
+        return self._endpageColor
 
-    @headbandColor.setter
-    def headbandColor(self, value: str):
-        self._headbandColor = value
+    @endPageColor.setter
+    def endPageColor(self, value: str):
+        self._endpageColor = value
 
     # booktype props
 
@@ -190,16 +190,6 @@ class BookEntry:
     @pageMaterial.setter
     def pageMaterial(self, value: str):
         self._pageMaterial = value
-
-    # pages props
-
-    @property
-    def pages(self):
-        return self._pages
-
-    @pages.setter
-    def pages(self, value: int):
-        self._pages = value
 
     # signitures props
 
