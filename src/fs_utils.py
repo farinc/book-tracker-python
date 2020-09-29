@@ -98,7 +98,7 @@ class FsUtils:
 
     @classmethod
     def create_book_current_batch(cls) -> BookEntry:
-        book_entry = BookEntry(cls.get_new_book_id(),cls.get_new_batch_id())
+        book_entry = BookEntry(cls.get_new_book_id(),cls.get_current_batch())
         cls.save_book(book_entry)
         return book_entry
 
